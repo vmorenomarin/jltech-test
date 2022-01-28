@@ -11,9 +11,6 @@ const getUsers = (companies) => {
   return users;
 };
 
-const users = getUsers(companies);
-// console.log(users);
-
 // Next function replace "undefined" value in "firstName" and "lastName" keys with "" character value also, returns all firstname and lastnames with uppercase at first letter.
 
 const changeUndefined = (users) => {
@@ -78,9 +75,19 @@ const assamblingData = (companiesName, users, companies) => {
   return companies;
 };
 
-let usersModified = changeUndefined(users);
+const modifyCompanies = (companies) => {
+  const users = getUsers(companies);
+  const companiesName = getCompaniesName(companies);
+  const usersModified = changeUndefined(users);
+  const modifiedCompanies = assamblingData(
+    companiesName,
+    usersModified,
+    companies
+  );
+  return modifiedCompanies;
+};
 
-console.log("----SOLUTION EXAMPLE 1 --- ", assamblingData(getCompaniesName(companies), usersModified, companies));
+console.log("----SOLUTION EXAMPLE 1 --- ", modifyCompanies(companies));
 
 // -----------------------------------------------------------------------------
 // INSTRUCCIONES EN ESPAÑOL
