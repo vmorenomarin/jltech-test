@@ -3,9 +3,25 @@ const companies = createAll();
 
 cleanConsole(2, companies);
 
-console.log("---- SOLUTION EXAMPLE 2 --- ", companies);
+const hasCarValidator = (companies, hasCar) => {
+  companies.map((company) => {
+    const userHasCar = [];
+    company["users"].map((user) => {
+      if (user["car"] == hasCar) {
+        userHasCar.push(user);
+      }
+    });
+    const companyNewUsers = { ...company, users: userHasCar };
+    const newUsersLength = companyNewUsers["users"].length;
+    companyNewUsers["usersLength"] = newUsersLength;
+    companies[companies.indexOf(company)] = companyNewUsers;
+  });
+  return companies;
+};
 
-// -----------------------------------------------------------------------------
+console.log("---- SOLUTION EXAMPLE 2 --- ", hasCarValidator(companies, false));
+
+// // -----------------------------------------------------------------------------
 // INSTRUCCIONES EN ESPAÑOL
 
 // Crear una función tomando como parámetro la variable "companies" y el

@@ -5,8 +5,8 @@ cleanConsole(1, companies);
 
 const getUsers = (companies) => {
   const users = [];
-  companies.map((companie) => {
-    users.push(companie["users"]);
+  companies.map((company) => {
+    users.push(company["users"]);
   });
   return users;
 };
@@ -49,9 +49,9 @@ const changeUndefined = (users) => {
 
 const getCompaniesName = (companies) => {
   const companiesName = [];
-  companies.map((companie) => {
+  companies.map((company) => {
     companiesName.push(
-      companie["name"][0].toUpperCase() + companie["name"].slice(1)
+      company["name"][0].toUpperCase() + company["name"].slice(1)
     );
   });
   return companiesName;
@@ -65,11 +65,11 @@ const assamblingData = (companiesName, users, companies) => {
     }
     companies[j]["name"] = companiesName[j];
   }
-  companies.sort((companie1, companie2) => {
-    if (companie1.users.length > companie2.users.length) {
+  companies.sort((company1, company2) => {
+    if (company1.users.length > company2.users.length) {
       return -1;
     }
-    if (companie1.users.length < companie2.users.length) {
+    if (company1.users.length < company2.users.length) {
       return 1;
     }
     return 0;
