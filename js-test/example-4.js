@@ -4,7 +4,7 @@ const companies = createAll();
 
 cleanConsole(4, companies);
 
-const usersTable = (companies) => {
+export default function usersTable(companies) {
   const usersTable = [];
   companies.map((company) => {
     company["users"].map((user) => {
@@ -22,7 +22,7 @@ const usersTable = (companies) => {
     return 0;
   });
   return usersTable;
-};
+}
 
 console.log("---- SOLUTION EXAMPLE 4 --- ", usersTable(companies));
 

@@ -1,9 +1,30 @@
 import { cleanConsole, createAll } from "./data";
+import usersTable from "./example-4";
 const companies = createAll();
 
 cleanConsole(5, companies);
 
-console.log("---- SOLUTION EXAMPLE 5 --- ", companies);
+const usersStats = (companies) => {
+  const userStats = {};
+  const users = usersTable(companies);
+  userStats["size"] = users.length;
+  let ageSum = 0;
+  let hasCar = 0;
+  let sumAverageWithCar = 0;
+  users.map((user) => {
+    ageSum += user["age"];
+    if (user["car"] === true) {
+      hasCar += 1;
+      sumAverageWithCar += user["age"];
+    }
+  });
+  userStats["averageAge"] = (ageSum / users.length).toPrecision(3);
+  userStats["hasCar"] = hasCar;
+  userStats["averageWithCar"] = (sumAverageWithCar / hasCar).toPrecision(3);
+  return userStats;
+};
+
+console.log("---- SOLUTION EXAMPLE 5 --- ", usersStats(companies));
 // -----------------------------------------------------------------------------
 // INSTRUCCIONES EN ESPAÑOL
 
