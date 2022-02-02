@@ -3,23 +3,67 @@ const companies = createAll();
 
 cleanConsole(7, companies);
 
-console.log("---- SOLUTION EXAMPLE 7 part 1 --- ", companies);
+console.log("EXAMPLE 7 part 1: Display Company name ---");
 
-console.log("---- SOLUTION EXAMPLE 7 part 2 --- ", companies);
+const displayName = (id) => {
+  const companyToDisplay = companies.filter(
+    (company) => company["id"] == id
+  )[0];
+  return companyToDisplay["name"];
+};
 
-console.log("---- SOLUTION EXAMPLE 7 part 3 --- ", companies);
+console.log("---- SOLUTION EXAMPLE 7 part 1 --- ", displayName(0));
 
-console.log("---- SOLUTION EXAMPLE 7 part 4 --- ", companies);
+console.log("EXAMPLE 7 part 2: Delete company ---");
 
-console.log("---- SOLUTION EXAMPLE 7 part 5 --- ", companies);
+const deleteCompany = (id) => {
+  let newCompanies = companies.filter((company) => company["id"] !== id);
+  return newCompanies;
+};
 
-console.log("---- SOLUTION EXAMPLE 7 part 6 --- ", companies);
+console.log("---- SOLUTION EXAMPLE 7 part 2 --- ", deleteCompany(0));
 
-console.log("---- SOLUTION EXAMPLE 7 part 7 --- ", companies);
+console.log("EXAMPLE 7 part 3: Put/Patch data company (except users) ---");
 
-console.log("---- SOLUTION EXAMPLE 7 part 8 --- ", companies);
+const patchToCompany = (id) => {
+  let company = companies.filter((company) => company["id"] === id)[0];
+  Object.keys(company).map((key) => {
+    if (key != "users") {
+      company["name"] = "Tesla"; // Name atrribuite to change must be typed.
+    }
+    company = { ...company };
+  });
+  return companies;
+};
 
-console.log("---- SOLUTION EXAMPLE 7 part 9 --- ", companies);
+console.log("---- SOLUTION EXAMPLE 7 part 3 --- ", patchToCompany(1));
+
+console.log("EXAMPLE 7 part 4: Add user to company ---");
+
+const addUser = (id) => {
+  const company = companies.filter((company) => company["id"] === id)[0];
+  company["users"].push({
+    firstName: "Juan",
+    lastName: "Delgado",
+    age: 35,
+    car: true,
+    id: company["users"].length,
+  });
+  company["usersLength"] = company["users"].length;
+  return companies;
+};
+
+console.log("---- SOLUTION EXAMPLE 7 part 4 --- ", addUser(0));
+
+// console.log("---- SOLUTION EXAMPLE 7 part 5 --- ", companies);
+
+// console.log("---- SOLUTION EXAMPLE 7 part 6 --- ", companies);
+
+// console.log("---- SOLUTION EXAMPLE 7 part 7 --- ", companies);
+
+// console.log("---- SOLUTION EXAMPLE 7 part 8 --- ", companies);
+
+// console.log("---- SOLUTION EXAMPLE 7 part 9 --- ", companies);
 // -----------------------------------------------------------------------------
 // INSTRUCCIONES EN ESPAÑOL
 
