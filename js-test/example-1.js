@@ -1,7 +1,7 @@
 import { createAll, cleanConsole } from "./data";
 const companies = createAll();
 
-cleanConsole(1, companies);
+// cleanConsole(1, companies);
 
 const getUsers = (companies) => {
   const users = [];
@@ -75,19 +75,19 @@ const assamblingData = (companiesName, users, companies) => {
   return companies;
 };
 
-const modifyCompanies = (companies) => {
+export default function modifyCompanies(companies) {
   const users = getUsers(companies);
-  const companiesName = getCompaniesName(companies);
   const usersModified = changeUndefined(users);
+  const companiesName = getCompaniesName(companies);
   const modifiedCompanies = assamblingData(
     companiesName,
     usersModified,
     companies
   );
   return modifiedCompanies;
-};
+}
 
-console.log("----SOLUTION EXAMPLE 1 --- ", modifyCompanies(companies));
+// console.log("----SOLUTION EXAMPLE 1 --- ", modifyCompanies(companies));
 
 // -----------------------------------------------------------------------------
 // INSTRUCCIONES EN ESPAÑOL

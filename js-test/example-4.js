@@ -4,7 +4,27 @@ const companies = createAll();
 
 cleanConsole(4, companies);
 
-console.log("---- SOLUTION EXAMPLE 4 --- ", companies);
+const usersTable = (companies) => {
+  const usersTable = [];
+  companies.map((company) => {
+    company["users"].map((user) => {
+      user["company"] = company["name"];
+      usersTable.push(user);
+    });
+  });
+  usersTable.sort((user1, user2) => {
+    if (user1["age"] > user2["age"]) {
+      return -1;
+    }
+    if (user1["age"] < user2["age"]) {
+      return 1;
+    }
+    return 0;
+  });
+  return usersTable;
+};
+
+console.log("---- SOLUTION EXAMPLE 4 --- ", usersTable(companies));
 
 // -----------------------------------------------------------------------------
 // INSTRUCCIONES EN ESPAÑOL

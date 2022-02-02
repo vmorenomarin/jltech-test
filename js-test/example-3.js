@@ -1,9 +1,44 @@
 import { cleanConsole, createAll } from "./data";
+import modifyCompanies from "./example-1";
 const companies = createAll();
 
 cleanConsole(3, companies);
 
-console.log("---- SOLUTION EXAMPLE 3 --- ", companies);
+const verifyCapitalized = (companies) => {
+  let counter_companies = 0;
+  let counter_users = 0;
+  let initialusers = 0;
+  companies.map((company) => {
+    initialusers = initialusers + company.usersLength;
+  });
+
+  companies.map((company) => {
+    company.name[0] === company.name[0].toUpperCase()
+      ? counter_companies++
+      : counter_companies;
+
+    company.users.map((user) => {
+      (user["firstName"] === "" ||
+        user["firstName"][0] === user["firstName"][0].toUpperCase()) &&
+      (user["lastName"] === "" ||
+        user["lastName"][0] === user["lastName"][0].toUpperCase())
+        ? counter_users++
+        : counter_users;
+    });
+  });
+  console.log(counter_users, initialusers);
+  return companies.length === counter_companies &&
+    counter_users === initialusers
+    ? true
+    : false;
+};
+const newCompanies = modifyCompanies(companies);
+console.log(
+  "---- SOLUTION EXAMPLE 3 --- ",
+//   verifyCapitalized(companies)
+    verifyCapitalized(newCompanies)
+  //   modifyCompanies(companies)
+);
 
 // -----------------------------------------------------------------------------
 // INSTRUCCIONES EN ESPAÑOL
