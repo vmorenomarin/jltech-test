@@ -1,10 +1,22 @@
 import { cleanConsole, createAll } from "./data";
+import usersTable from "./example-4";
 
 const companies = createAll();
 
+const createObjetc = (companies) => {
+  const newObjetc = {};
+  const users = usersTable(companies);
+  users.map((user) => {
+    newObjetc[user["firstName"] + user["lastName"] + user["age"]] = user["car"];
+  });
+  //   return newObjetc;
+  console.log(newObjetc);
+  return newObjetc;
+};
+
 cleanConsole(6, companies);
 
-console.log("---- SOLUTION EXAMPLE 6 --- ",companies);
+console.log("---- SOLUTION EXAMPLE 6 --- ", createObjetc(companies));
 
 // -----------------------------------------------------------------------------
 // INSTRUCCIONES EN ESPAÑOL
