@@ -1,6 +1,6 @@
 import { cleanConsole, createAll } from "./data";
 const companies = createAll();
-
+var companiesClone = Array.from(companies);
 cleanConsole(7, companies);
 
 console.log("EXAMPLE 7 part 1: Display Company name ---");
@@ -55,15 +55,91 @@ const addUser = (id) => {
 
 console.log("---- SOLUTION EXAMPLE 7 part 4 --- ", addUser(0));
 
-// console.log("---- SOLUTION EXAMPLE 7 part 5 --- ", companies);
+console.log("EXAMPLE 7 part 5: Put data company (except users) ---");
 
-// console.log("---- SOLUTION EXAMPLE 7 part 6 --- ", companies);
+const putToCompany = (id) => {
+  let company = companies.filter((company) => company["id"] === id)[0];
+  Object.keys(company).map((key) => {
+    if (key != "users") {
+      company["name"] = "Tesla"; // Name atrribuite to change must be typed.
+    }
+    company = { ...company };
+  });
+  return companies;
+};
 
-// console.log("---- SOLUTION EXAMPLE 7 part 7 --- ", companies);
+console.log("---- SOLUTION EXAMPLE 7 part 5 --- ", putToCompany(1));
 
-// console.log("---- SOLUTION EXAMPLE 7 part 8 --- ", companies);
+console.log("EXAMPLE 7 part 6: Delete user from company ---");
 
-// console.log("---- SOLUTION EXAMPLE 7 part 9 --- ", companies);
+const deleteUser = (idCompany, idUser) => {
+  let company = companiesClone.filter(
+    (company) => company["id"] === idCompany
+  )[0];
+  let users = company["users"].filter((user) => user["id"] !== idUser);
+  companiesClone[idCompany]["users"] = users;
+  companiesClone[idCompany]["usersLength"] = users.length;
+
+  return companiesClone;
+};
+
+console.log("---- SOLUTION EXAMPLE 7 part 6 --- ", deleteUser(1, 2));
+
+console.log("EXAMPLE 7 part 7: User Patch ---");
+
+const patchUser = (idCompany, idUser) => {
+  const companiesClone = companies.slice();
+  let company = companiesClone.filter(
+    (company) => company["id"] === idCompany
+  )[0];
+  let user = company["users"].filter((user) => user["id"] === idUser)[0];
+  user["lastName"] = "Tesla"; // Name atrribuite to change in user, must be typed.
+  console.log(user);
+  companiesClone[idCompany]["users"][idUser] = user;
+  return companiesClone;
+};
+
+console.log("---- SOLUTION EXAMPLE 7 part 7 --- ", patchUser(3, 5));
+
+console.log("EXAMPLE 7 part 8: User Put ---");
+
+const putUser = (idCompany, idUser) => {
+  let company = companiesClone.filter(
+    (company) => company["id"] === idCompany
+  )[0];
+  let user = company["users"].filter((user) => user["id"] === idUser)[0];
+  user["lastName"] = "Tesla"; // Name atrribuite to change in user, must be typed.
+  console.log(user);
+  companiesClone[idCompany]["users"][idUser] = user;
+  return companiesClone;
+};
+
+console.log("---- SOLUTION EXAMPLE 7 part 8 --- ", putUser(5, 3));
+
+console.log("EXAMPLE 7 part 9: Change user to another company");
+
+const changeUserCompany = (id1, id2, idUser) => {
+  let companiesToChange = companiesClone.filter(
+    (company) => company["id"] === id1 || company["id"] === id2
+  );
+  let userTochange = companiesToChange[0]["users"].filter(
+    (user) => user["id"] === idUser
+  )[0];
+  userTochange["id"] = companiesToChange[1]["users"].length;
+  companiesToChange[1]["users"].push(userTochange);
+  companiesToChange[1]["usersLength"] = companiesToChange[1]["users"].length;
+
+  let users = companiesToChange[0]["users"].filter(
+    (user) => user["id"] !== idUser
+  );
+  companiesClone[id1]["users"] = users;
+  companiesClone[id1]["users"]["usersLength"] = users.length;
+  companiesClone[id2] = companiesToChange[1];
+
+  return companiesClone;
+};
+
+console.log("---- SOLUTION EXAMPLE 7 part 9 --- ", changeUserCompany(0, 1, 3));
 // -----------------------------------------------------------------------------
 // INSTRUCCIONES EN ESPAÑOL
 
