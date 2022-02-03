@@ -3,7 +3,7 @@ const companies = createAll();
 var companiesClone = Array.from(companies);
 cleanConsole(7, companies);
 
-console.log("EXAMPLE 7 part 1: Display Company name ---");
+console.log("EXAMPLE 7 part 1: Display name of company ---");
 
 const displayName = (id) => {
   const companyToDisplay = companies.filter(
@@ -218,4 +218,4 @@ console.log("---- SOLUTION EXAMPLE 7 part 9 --- ", changeUserCompany(0, 1, 3));
 // Part 9: Create a function taking as parameter two "id" of "company" and
 // an "id" of "user". The function must allow the user to be transferred as a parameter
 // from the 1st "company" to the 2nd "company". The "usersLength" attribute of each
-// "company" must be updated
+// "company" must be updated 
