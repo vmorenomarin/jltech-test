@@ -1,6 +1,6 @@
 const jwt = require("jsonwebtoken");
 const generalMessage = require("../helpers/messages.helper");
-const userModel = required("../models/user.model");
+const userModel = require("../models/user.model");
 
 const verifyToken = (req, res, next) => {
   if (!req.headers.authorization) {

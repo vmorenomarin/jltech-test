@@ -54,6 +54,8 @@ userCtrl.registerUser = async (req, res) => {
       password,
       phone,
     });
+    const { filename } = req.file;
+    newProduct.setImgUrl(filename);
     await newUser.save();
     /** Returns user token. */
     token = jsw.sign({ _id: newUser._id }, secret, { expiresIn: "1h" });
