@@ -1,6 +1,11 @@
 const userCtrl = {};
 const userModel = require("../models/user.model");
-const { generalMessage } = require("../helpesr/messages");
+const { generalMessage } = require("../helpers/messages.helper");
+const jsw = require("jsonwebtoken");
+const bcrypt = require("bcrypt");
+const auth = require("../helpers/auth.helper");
+
+const secret = "Antaeus";
 
 userCtrl.listUsers = async (req, res, next) => {
   /** Returns all users in database. This method is available only for admin users */
@@ -50,7 +55,8 @@ userCtrl.registerUser = async (req, res) => {
       phone,
     });
     await newUser.save();
-    // Add here token lines code
+    /** Returns user token. */
+    token = jsw.sign({ _id: newUser._id }, secret, { expiresIn: "1h" });
     generalMessage(
       res,
       201,
@@ -79,7 +85,17 @@ userCtrl.login = async (req, res) => {
         `User with ${email} was not found.`
       );
     }
-    // Write here code lines to validate password user bcrypt
+    const response = bcrypt.compareSync(password, user.password);
+    if (response) {
+      const token = jsw.sign({ _id: user._id }, secret, { expiresIn: "1h" });
+      return generalMessage(
+        res,
+        201,
+        { id: user._id, name: user.name, token },
+        true,
+        `Welcome ${user.name}`
+      );
+    }
     generalMessage(res, 400, "", false, "Wrong pasword. Please, try again.");
   } catch (error) {
     generalMessage(res, 500, "", false, error.message);
