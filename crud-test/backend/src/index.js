@@ -25,7 +25,8 @@ app.use(cors({ origin: "*" }));
 /**  HTTP request logger */
 app.use(morgan("dev"));
 
-// app.use("/user", require("./routes/user.route"))
+/** Use routes to controller methods */
+app.use("/user", require("./routes/user.route"));
 
 /** Run server */
 app.listen(app.get("Port"), () => {

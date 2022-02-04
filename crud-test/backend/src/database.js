@@ -9,4 +9,4 @@ mongoose
   .then((db) =>
     console.log(`Database ${db.connection.name} is connected in server.`)
   )
-  .catch((error) => console.log(error1));
+  .catch((error) => console.log(error));
