@@ -4,6 +4,7 @@ const { generalMessage } = require("../helpers/messages.helper");
 const jsw = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const auth = require("../helpers/auth.helper");
+const deleteImg = require("../helpers/deleteImageCtrl.helper");
 
 const secret = "Antaeus";
 
@@ -55,14 +56,14 @@ userCtrl.registerUser = async (req, res) => {
       phone,
     });
     const { filename } = req.file;
-    newProduct.setImgUrl(filename);
+    newUser.setImgUrl(filename);
+    console.log("newUser");
     await newUser.save();
     /** Returns user token. */
     token = jsw.sign({ _id: newUser._id }, secret, { expiresIn: "1h" });
     generalMessage(
       res,
       201,
-      res,
       token,
       true,
       `User account successfully created. Welcome ${newUser.name}`
@@ -104,12 +105,61 @@ userCtrl.login = async (req, res) => {
   }
 };
 
+userCtrl.updateUser = async (req, res) => {
+  /** Updates user data. Need id to locate user in database.*/
+  try {
+    const { id } = req.params;
+    user = await userModel.findOne({ id });
+    if (!user) {
+      return generalMessage(res, 404, "", false, "User not found");
+    }
+    const name = req.body.name || user.name;
+    const lastName = req.body.lastname || user.lastname;
+    const email = req.body.email || user.email;
+    const password = req.body.password || user.password;
+    const phone = req.body.phone || user.phone;
+    if (req.file) {
+      if (user.nameImg) {
+        deleteImg(user.nameImg);
+      }
+      const { filename } = req.file;
+      user.setImgUrl(filename);
+      await user.save();
+    }
+    const nameImg = user.nameImg;
+    const img = product.img;
+    const updatedProduct = {
+      name,
+      lastname,
+      email,
+      password,
+      phone,
+      nameImg,
+      img,
+    };
+    await product.update(updatedProduct);
+    generalMessage(
+      res,
+      200,
+      updatedProduct,
+      ok,
+      `${user.name} ${lastname} was updated.`
+    );
+  } catch (error) {
+    generalMessage(res, 500, "", false, error.message);
+  }
+};
+
 userCtrl.deleteUser = async (req, res) => {
+  /** Deletes user from database if a user id is provided.*/
   try {
     const { idUser } = req.params;
     const user = await userModel.findById({ idUser });
     if (!user) {
       return generalMessage(res, 404, "", false, "User not found.");
+    }
+    if (user.nameImg) {
+      deleteImg(user.nameImg);
     }
     await userModel.deleteOne({ idUser });
     generalMessage(res, 200, "", true, "User deleted.");

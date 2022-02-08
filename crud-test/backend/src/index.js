@@ -29,6 +29,6 @@ app.use(morgan("dev"));
 app.use("/user", require("./routes/user.route"));
 
 /** Run server */
-app.listen(app.get("Port"), () => {
+app.listen(app.get("port"), () => {
   console.log(`Server running in ${app.get("port")} port.`);
 });

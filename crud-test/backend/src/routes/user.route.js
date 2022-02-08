@@ -5,15 +5,11 @@ const userCtrl = require("../controllers/user.controller");
 const upload = require("../middlewares/imgUploader.middleware");
 const verifyToken = require("../middlewares/verifyUser.middleware");
 
-route.get("/", verifyToken, userCtrl.listUsers);
-route.get("/:id", verifyToken, userCtrl.listUserById);
-route.put(
-  "/register",
-  verifyToken,
-  upload("users").single("img"),
-  userCtrl.registerUser
-);
-route.put("/login", verifyToken, userCtrl.login);
+route.get("/", userCtrl.listUsers);
+route.get("/:id", userCtrl.listUserById);
+route.post("/register", upload.single("img"), userCtrl.registerUser);
+route.post("/login", verifyToken, userCtrl.login);
+route.put("/:id", verifyToken, userCtrl.updateUser);
 route.delete("/:id", verifyToken, userCtrl.deleteUser);
 
 module.exports = route;
