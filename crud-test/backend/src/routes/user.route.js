@@ -6,7 +6,7 @@ const upload = require("../middlewares/imgUploader.middleware");
 const verifyToken = require("../middlewares/verifyUser.middleware");
 
 route.get("/", userCtrl.listUsers);
-route.get("/:id", userCtrl.listUserById);
+route.get("/u/:id", userCtrl.listUserById);
 route.post("/register", upload.single("img"), userCtrl.registerUser);
 route.post("/login", verifyToken, userCtrl.login);
 route.put("/:id", verifyToken, userCtrl.updateUser);

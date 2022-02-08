@@ -21,12 +21,12 @@ userCtrl.listUsers = async (req, res, next) => {
 userCtrl.listUserById = async (req, res) => {
   /** Returns an user by ID an returns the user data. */
   try {
-    const id = req.params.id;
-    const user = await userModel.findById({ id });
+    const { id } = req.params;
+    const user = await userModel.findById({ _id: id });
     if (!user) {
-      return generalMessage(res, 404, data, false, "User not found");
+      return generalMessage(res, 404, "user", false, "User not found");
     }
-    generalMessage(res, 200, data, true, "User found.");
+    generalMessage(res, 200, user, true, "User found.");
   } catch (error) {
     generalMessage(res, 500, "", false, error.message);
   }
@@ -52,7 +52,7 @@ userCtrl.registerUser = async (req, res) => {
       name,
       lastname,
       email,
-      password,
+      password:auth.encryptPassword(password),
       phone,
     });
     const { filename } = req.file;
@@ -60,7 +60,7 @@ userCtrl.registerUser = async (req, res) => {
     console.log("newUser");
     await newUser.save();
     /** Returns user token. */
-    token = jsw.sign({ _id: newUser._id }, secret, { expiresIn: "1h" });
+    token = jsw.sign({ _id: newUser._id, role: newUser.role }, secret, { expiresIn: "1h" });
     generalMessage(
       res,
       201,
@@ -90,7 +90,7 @@ userCtrl.login = async (req, res) => {
     }
     const response = bcrypt.compareSync(password, user.password);
     if (response) {
-      const token = jsw.sign({ _id: user._id }, secret, { expiresIn: "1h" });
+      const token = jsw.sign({ _id: user._id, role: user.role }, secret, { expiresIn: "1h" });
       return generalMessage(
         res,
         201,
@@ -132,7 +132,7 @@ userCtrl.updateUser = async (req, res) => {
       name,
       lastname,
       email,
-      password,
+      password:auth.encryptPassword(password),
       phone,
       nameImg,
       img,
