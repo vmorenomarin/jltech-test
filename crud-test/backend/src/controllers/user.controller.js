@@ -4,7 +4,7 @@ const { generalMessage } = require("../helpers/messages.helper");
 const jsw = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const auth = require("../helpers/auth.helper");
-const deleteImg = require("../helpers/deleteImageCtrl.helper");
+const {deleteImg} = require("../helpers/deleteImageCtrl.helper");
 
 const secret = "Antaeus";
 
@@ -52,15 +52,16 @@ userCtrl.registerUser = async (req, res) => {
       name,
       lastname,
       email,
-      password:auth.encryptPassword(password),
+      password: auth.encryptPassword(password),
       phone,
     });
     const { filename } = req.file;
     newUser.setImgUrl(filename);
-    console.log("newUser");
     await newUser.save();
     /** Returns user token. */
-    token = jsw.sign({ _id: newUser._id, role: newUser.role }, secret, { expiresIn: "1h" });
+    token = jsw.sign({ _id: newUser._id, role: newUser.role }, secret, {
+      expiresIn: "1h",
+    });
     generalMessage(
       res,
       201,
@@ -90,7 +91,9 @@ userCtrl.login = async (req, res) => {
     }
     const response = bcrypt.compareSync(password, user.password);
     if (response) {
-      const token = jsw.sign({ _id: user._id, role: user.role }, secret, { expiresIn: "1h" });
+      const token = jsw.sign({ _id: user._id, role: user.role }, secret, {
+        expiresIn: "1h",
+      });
       return generalMessage(
         res,
         201,
@@ -106,15 +109,15 @@ userCtrl.login = async (req, res) => {
 };
 
 userCtrl.updateUser = async (req, res) => {
-  /** Updates user data. Need id to locate user in database.*/
+  /** Updates user data. Need to locate user in database.*/
   try {
     const { id } = req.params;
-    user = await userModel.findOne({ id });
+    const user = await userModel.findById({ _id: id });
     if (!user) {
       return generalMessage(res, 404, "", false, "User not found");
     }
     const name = req.body.name || user.name;
-    const lastName = req.body.lastname || user.lastname;
+    const lastname = req.body.lastname || user.lastname;
     const email = req.body.email || user.email;
     const password = req.body.password || user.password;
     const phone = req.body.phone || user.phone;
@@ -127,41 +130,42 @@ userCtrl.updateUser = async (req, res) => {
       await user.save();
     }
     const nameImg = user.nameImg;
-    const img = product.img;
-    const updatedProduct = {
+    const img = user.img;
+    const updatedUser = {
       name,
       lastname,
       email,
-      password:auth.encryptPassword(password),
+      password: auth.encryptPassword(password),
       phone,
       nameImg,
       img,
     };
-    await product.update(updatedProduct);
+    await user.updateOne(updatedUser);
     generalMessage(
       res,
       200,
-      updatedProduct,
-      ok,
-      `${user.name} ${lastname} was updated.`
+      updatedUser,
+      true,
+      `${name} ${lastname} was updated.`
     );
   } catch (error) {
-    generalMessage(res, 500, "", false, error.message);
+    generalMessage(res, 500, "", false, "error.message");
   }
 };
 
 userCtrl.deleteUser = async (req, res) => {
   /** Deletes user from database if a user id is provided.*/
   try {
-    const { idUser } = req.params;
-    const user = await userModel.findById({ idUser });
+    const { id } = req.params;
+    console.log(id);
+    const user = await userModel.findById({ _id: id });
     if (!user) {
       return generalMessage(res, 404, "", false, "User not found.");
     }
     if (user.nameImg) {
       deleteImg(user.nameImg);
     }
-    await userModel.deleteOne({ idUser });
+    await userModel.deleteOne({ _id: id });
     generalMessage(res, 200, "", true, "User deleted.");
   } catch (error) {
     generalMessage(res, 500, "", false, error.message);

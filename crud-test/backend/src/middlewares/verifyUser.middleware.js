@@ -1,6 +1,8 @@
 const jwt = require("jsonwebtoken");
-const {generalMessage} = require("../helpers/messages.helper");
+const { generalMessage } = require("../helpers/messages.helper");
 const userModel = require("../models/user.model");
+
+const secret = "Antaeus";
 
 const verifyToken = (req, res, next) => {
   if (!req.headers.authorization) {
@@ -20,7 +22,7 @@ const verifyToken = (req, res, next) => {
       return generalMessage(res, 401, "", false, "Not authorizated3.");
     }
     req.iduser = payload._id;
-    next;
+    next();
   });
 };
 
