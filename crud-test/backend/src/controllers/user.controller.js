@@ -8,7 +8,7 @@ const {deleteImg} = require("../helpers/deleteImageCtrl.helper");
 
 const secret = "Antaeus";
 
-userCtrl.listUsers = async (req, res, next) => {
+userCtrl.listUsers = async (req, res) => {
   /** Returns all users in database. This method is available only for admin users */
   try {
     const users = await userModel.find({});

@@ -27,6 +27,7 @@ app.use(morgan("dev"));
 
 /** Use routes to controller methods */
 app.use("/user", require("./routes/user.route"));
+app.use("/product", require("./routes/product.route"));
 
 /** Run server */
 app.listen(app.get("port"), () => {

@@ -3,35 +3,39 @@ const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
 
 /** Returns an user schema.
- * Role could be seller, admin, warehouser, or HR.
+ * Category: According to the stora type.
+ * Code: Refers to an unique product identifier.\
+ * User: User company who did upload the product.
  */
-const userSchema = new Schema(
+
+const productSchema = new Schema(
   {
     name: {
       type: String,
       required: true,
     },
-    lastname: {
-      type: String,
-      required: true,
-    },
-    email: {
+    code: {
       type: String,
       required: true,
       unique: true,
     },
-    password: {
-      type: String,
-      required: true,
-    },
-    phone: {
+    price: {
       type: Number,
       required: true,
     },
-    rol: {
+    user: {
+      type: Schema.Types.ObjectId,
+      ref: "user",
+      required: true,
+    },
+    stock: {
+      type: Number,
+      required: true,
+      default: 0,
+    },
+    category: {
       type: String,
       required: true,
-      default: "Seller",
     },
     img: {
       type: String,
@@ -45,11 +49,11 @@ const userSchema = new Schema(
   { timestamps: true }
 );
 
-userSchema.methods.setImgUrl = function (filename) {
+productSchema.methods.setImgUrl = function (filename) {
   /** Returns the image URL to the storage directory an assigns a filename to the image. */
   const url = "http://localhost:4000/";
-  this.img = url + "public/imgs/user+" + filename;
+  this.img = url + "public/imgs/product+" + filename;
   this.nameImg = filename;
 };
 
-module.exports = model("users", userSchema);
+module.exports = model("products", productSchema);
