@@ -157,7 +157,6 @@ userCtrl.deleteUser = async (req, res) => {
   /** Deletes user from database if a user id is provided.*/
   try {
     const { id } = req.params;
-    console.log(id);
     const user = await userModel.findById({ _id: id });
     if (!user) {
       return generalMessage(res, 404, "", false, "User not found.");

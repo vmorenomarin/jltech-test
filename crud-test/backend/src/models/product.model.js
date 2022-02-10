@@ -25,7 +25,7 @@ const productSchema = new Schema(
     },
     user: {
       type: Schema.Types.ObjectId,
-      ref: "user",
+      ref: "users",
       required: true,
     },
     stock: {
@@ -52,7 +52,7 @@ const productSchema = new Schema(
 productSchema.methods.setImgUrl = function (filename) {
   /** Returns the image URL to the storage directory an assigns a filename to the image. */
   const url = "http://localhost:4000/";
-  this.img = url + "public/imgs/product+" + filename;
+  this.img = url + "public/imgs/" + filename;
   this.nameImg = filename;
 };
 
