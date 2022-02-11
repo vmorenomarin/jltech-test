@@ -8,7 +8,7 @@ route.get("/", verifyToken, customerCtrl.listCustomers);
 route.get("/c/:id", verifyToken, customerCtrl.listCustomerById);
 route.post("/", upload.single("img"), customerCtrl.addCustomer);
 route.post("/login", customerCtrl.login);
-route.put("/:id", verifyToken, customerCtrl.updateCustomer);
+route.put("/:id", verifyToken, upload.single("img"), customerCtrl.updateCustomer);
 route.delete("/:id", verifyToken, customerCtrl.deleteCustomer);
 
 module.exports = route;

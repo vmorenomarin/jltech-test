@@ -147,7 +147,7 @@ userCtrl.updateUser = async (req, res) => {
       200,
       updatedUser,
       true,
-      `${name} ${lastname} was updated.`
+      `${name} ${lastname} info was updated.`
     );
   } catch (error) {
     generalMessage(res, 500, "", false, error.message);

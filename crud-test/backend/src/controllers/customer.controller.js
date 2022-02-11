@@ -35,10 +35,10 @@ customerCtrl.listCustomerById = async (req, res) => {
 customerCtrl.addCustomer = async (req, res) => {
   try {
     const { name, lastname, phone, password, email } = req.body;
-    const customer = await customerModel.findOne({ email });
     /** Customer existence validation */
+    const customer = await customerModel.findOne({ email });
     if (customer) {
-      generalMessage(res, 409, "", false, "User already exists.");
+      return generalMessage(res, 409, "", false, "User already exists.");
     }
     /** Creates and saves the customer based in the customer model database. */
     const newCustomer = new customerModel({
@@ -49,7 +49,6 @@ customerCtrl.addCustomer = async (req, res) => {
       password: auth.encryptPassword(password),
     });
     const { filename } = req.file;
-    console.log("here");
     newCustomer.setImgUrl(filename);
     await newCustomer.save();
     /** Returns user token. */
@@ -72,7 +71,7 @@ customerCtrl.login = async (req, res) => {
   /** Login user. Returns token if user credetials are valid. */
   try {
     const { email, password } = req.body;
-    const customer = await customerModel.find({ email });
+    const customer = await customerModel.findOne({ email});
     if (!customer) {
       return generalMessage(
         res,
@@ -105,7 +104,7 @@ customerCtrl.updateCustomer = async (req, res) => {
   /** Updates customer data. Need to locate customer in database.*/
   try {
     const { id } = req.params;
-    const customer = await customerModel.find({ _id: id });
+    const customer = await customerModel.findById({ _id: id });
     if (!customer) {
       return generalMessage(res, 404, "", false, "User not found.");
     }
