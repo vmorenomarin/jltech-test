@@ -1,0 +1,1 @@
+"Change 'sales' word by 'purchases'; use and array prototype in purchase document customer schema."

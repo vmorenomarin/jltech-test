@@ -27,11 +27,14 @@ const customerSchema = new Schema(
       type: String,
       required: true,
     },
-    purchases: {
-      type: Schema.Types.ObjectId,
-      ref: "sales",
-      required: false,
-    },
+    purchases: [
+      {
+        type: Schema.Types.ObjectId,
+        ref: "sales",
+        required: true,
+        default: [],
+      },
+    ],
     img: {
       type: String,
       required: true,
