@@ -4,15 +4,16 @@ const { generalMessage } = require("../helpers/messages.helper");
 const jsw = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const auth = require("../helpers/auth.helper");
-const {deleteImg} = require("../helpers/deleteImageCtrl.helper");
+const { deleteImg } = require("../helpers/deleteImageCtrl.helper");
 
+// Next line will be delete. This is for test purposes.
 const secret = "Antaeus";
 
 userCtrl.listUsers = async (req, res) => {
   /** Returns all users in database. This method is available only for admin users */
   try {
     const users = await userModel.find({});
-    generalMessage(res, 200, users, true, "Data found");
+    generalMessage(res, 200, users, true, "Data found.");
   } catch (error) {
     generalMessage(res, 500, "", false, error.message);
   }
@@ -59,7 +60,7 @@ userCtrl.registerUser = async (req, res) => {
     newUser.setImgUrl(filename);
     await newUser.save();
     /** Returns user token. */
-    token = jsw.sign({ _id: newUser._id, role: newUser.role }, secret, {
+    const token = jsw.sign({ _id: newUser._id, role: newUser.role }, secret, {
       expiresIn: "1h",
     });
     generalMessage(
@@ -149,12 +150,12 @@ userCtrl.updateUser = async (req, res) => {
       `${name} ${lastname} was updated.`
     );
   } catch (error) {
-    generalMessage(res, 500, "", false, "error.message");
+    generalMessage(res, 500, "", false, error.message);
   }
 };
 
 userCtrl.deleteUser = async (req, res) => {
-  /** Deletes user from database if a user id is provided.*/
+  /** Deletes user from database if an user id is provided.*/
   try {
     const { id } = req.params;
     const user = await userModel.findById({ _id: id });

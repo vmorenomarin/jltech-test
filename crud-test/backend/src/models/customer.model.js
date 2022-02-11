@@ -15,17 +15,22 @@ const customerSchema = new Schema(
       required: true,
     },
     phone: {
-      type: String,
+      type: Number,
       required: true,
     },
     email: {
+      type: String,
+      required: true,
+      unique: true,
+    },
+    password: {
       type: String,
       required: true,
     },
     purchases: {
       type: Schema.Types.ObjectId,
       ref: "sales",
-      required: true,
+      required: false,
     },
     img: {
       type: String,
@@ -34,6 +39,13 @@ const customerSchema = new Schema(
     nameImg: {
       type: String,
       required: true,
+    },
+    rate: {
+      type: Number,
+      required: true,
+      min: 0,
+      max: 5,
+      default: 0,
     },
   },
   { timestamps: true }
