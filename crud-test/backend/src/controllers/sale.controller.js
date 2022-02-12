@@ -1,21 +1,21 @@
-const mongoose = require("mongoose");
+const saleCtrl = {};
+const saleModel = require("../models/sale.model");
+const { generalMessage } = require("../helpers/messages.helper");
 
-const { Schema, model } = mongoose;
+saleCtrl.listSales = async (req, res) => {
+  /** Returns all sales in database. This metrhod is available only for admin users */
+  try {
+    const sales = await saleModel
+      .find({})
+      .populate("user", {
+        password: 0,
+        phone: 0,
+      })
+      .populate("products");
+    generalMessage(res, 201, sales, true, "Data found.");
+  } catch (error) {
+    generalMessage(res, 500, "", false, error.message);
+  }
+};
 
-/** Returns a sales schema.
- */
-
-const saleSchema = new Schema({
-  number: { type: Number, required: true },
-  date: { type: Date, required: true },
-  customer: { type: Schema.Types.ObjectId, ref: "customers", required: true },
-  products: [
-    {
-      product: { type: Schema.Types.ObjectId, ref: "products", required: true },
-      mount: { type: Number, required: true },
-    },
-  ],
-  total: { type: Number, required: true },
-});
-
-module.exports = model("sales", saleSchema);
+module.exports = saleCtrl;

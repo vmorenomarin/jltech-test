@@ -14,6 +14,10 @@ const customerSchema = new Schema(
       type: String,
       required: true,
     },
+    document: {
+      type: Number,
+      required: true,
+    },
     phone: {
       type: Number,
       required: true,

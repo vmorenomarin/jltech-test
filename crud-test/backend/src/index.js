@@ -29,6 +29,7 @@ app.use(morgan("dev"));
 app.use("/user", require("./routes/user.route"));
 app.use("/product", require("./routes/product.route"));
 app.use("/customer", require("./routes/customer.route"));
+app.use("/sale", require("./routes/sale.route"));
 
 /** Run server */
 app.listen(app.get("port"), () => {
