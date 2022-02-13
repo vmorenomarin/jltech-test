@@ -12,7 +12,7 @@ const saleSchema = new Schema({
   products: [
     {
       product: { type: Schema.Types.ObjectId, ref: "products", required: true },
-      mount: { type: Number, required: true },
+      amount: { type: Number, required: true },
     },
   ],
   total: { type: Number, required: true },

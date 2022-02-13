@@ -1,0 +1,4 @@
+200 OK
+La solicitud ha tenido éxito. El significado de un éxito varía dependiendo del método HTTP:
+201 Created
+La solicitud ha tenido éxito y se ha creado un nuevo recurso como resultado de ello. Ésta es típicamente la respuesta enviada después de una petición PUT.
