@@ -34,7 +34,7 @@ customerCtrl.listCustomerById = async (req, res) => {
 
 customerCtrl.addCustomer = async (req, res) => {
   try {
-    const { name, lastname, phone, password, email } = req.body;
+    const { name, lastname, phone, password, email, document } = req.body;
     /** Customer existence validation */
     const customer = await customerModel.findOne({ email });
     if (customer) {
@@ -46,6 +46,7 @@ customerCtrl.addCustomer = async (req, res) => {
       lastname,
       phone,
       email,
+      document,
       password: auth.encryptPassword(password),
     });
     const { filename } = req.file;
@@ -71,7 +72,7 @@ customerCtrl.login = async (req, res) => {
   /** Login user. Returns token if user credetials are valid. */
   try {
     const { email, password } = req.body;
-    const customer = await customerModel.findOne({ email});
+    const customer = await customerModel.findOne({ email });
     if (!customer) {
       return generalMessage(
         res,
@@ -113,6 +114,7 @@ customerCtrl.updateCustomer = async (req, res) => {
     const email = req.body.email || customer.email;
     const phone = req.body.phone || customer.phone;
     const password = req.body.password || customer.password;
+    const document = req.body.document || customer.document;
     if (req.file) {
       if (customer.nameImg) {
         deleteImg(customer.nameImg);

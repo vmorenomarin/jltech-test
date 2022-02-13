@@ -6,16 +6,29 @@ const { Schema, model } = mongoose;
  */
 
 const saleSchema = new Schema({
-  number: { type: Number, required: true },
-  date: { type: Date, required: true },
-  customer: { type: Schema.Types.ObjectId, ref: "customers", required: true },
+  number: {
+    type: Number,
+    required: true,
+  },
+  date: {
+    type: Date,
+    required: true,
+  },
+  customer: {
+    type: Schema.Types.ObjectId,
+    ref: "customers",
+    required: true,
+  },
   products: [
     {
       product: { type: Schema.Types.ObjectId, ref: "products", required: true },
       amount: { type: Number, required: true },
     },
   ],
-  total: { type: Number, required: true },
+  total: {
+    type: Number,
+    required: true,
+  },
 });
 
 module.exports = model("sales", saleSchema);

@@ -35,7 +35,7 @@ const customerSchema = new Schema(
       {
         type: Schema.Types.ObjectId,
         ref: "sales",
-        required: true,
+        required: false,
         default: [],
       },
     ],
