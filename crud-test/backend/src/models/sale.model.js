@@ -13,12 +13,13 @@ const saleSchema = new Schema({
   date: {
     type: Date,
     required: true,
+    default: Date.now(),
   },
-  customer: {
-    type: Schema.Types.ObjectId,
-    ref: "customers",
-    required: true,
-  },
+  // customer: {
+  //   type: Schema.Types.ObjectId,
+  //   ref: "customers",
+  //   required: true,
+  // },
   products: [
     {
       product: { type: Schema.Types.ObjectId, ref: "products", required: true },

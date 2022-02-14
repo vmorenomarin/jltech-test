@@ -1,5 +1,6 @@
 const saleCtrl = {};
 const saleModel = require("../models/sale.model");
+const productModel = require("../models/product.model");
 const { generalMessage } = require("../helpers/messages.helper");
 
 saleCtrl.listSales = async (req, res) => {
@@ -41,26 +42,27 @@ saleCtrl.listByCustomer = async (req, res) => {
       return generalMessage(res, 404, "", false, "User not found.");
     }
     generalMessage(res, 200, salesCustomer, true, "");
-  } catch (error) {sto
+  } catch (error) {
+    sto;
     generalMessage(res, 500, "", false, error.message);
   }
 };
 
 saleCtrl.registerSale = async (req, res) => {
   try {
-    const { date, customer, products } = req.body;
+    const { products } = req.body;
     const countSales = await saleModel.count();
-    console.log(countSales)
     const number = countSales + 1;
-    let total = 0;
-    products.map(async (order) => {
-      let price = await saleModel.findOne(order.product)["price"];
-      total += price * order.amount;
-    });
+    for (var order in products) {
+      let product_price = await productModel.find({ _id: order.product });
+      console.log(order);
+      total += product_price * order.amount;
+    }
+    // console.log(total);
     const newSale = new saleModel({
       number,
       date,
-      customer,
+      // customer,
       products,
       total,
     });
