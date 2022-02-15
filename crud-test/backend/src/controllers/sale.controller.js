@@ -53,15 +53,15 @@ saleCtrl.registerSale = async (req, res) => {
     const { products } = req.body;
     const countSales = await saleModel.count();
     const number = countSales + 1;
-    for (var order in products) {
-      let product_price = await productModel.find({ _id: order.product });
-      console.log(order);
-      total += product_price * order.amount;
+    var total = 0;
+    for (var order of products) {
+      let product_price = await productModel.findOne({ _id: order.product }, 'price');
+      let price = product_price.price;
+      total += price * order.amount;
     }
-    // console.log(total);
+    console.log(total);
     const newSale = new saleModel({
       number,
-      date,
       // customer,
       products,
       total,
