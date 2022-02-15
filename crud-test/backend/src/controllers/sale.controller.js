@@ -8,7 +8,7 @@ saleCtrl.listSales = async (req, res) => {
   try {
     const sales = await saleModel
       .find({})
-      .populate("user", {
+      .populate("customer", {
         password: 0,
         phone: 0,
       })
@@ -37,7 +37,7 @@ saleCtrl.listByCustomer = async (req, res) => {
     const { id } = req.params;
     salesCustomer = await saleModel
       .find({ customer: id })
-      .populate("user", { password: 0, phone: 0 });
+      .populate("customer", { password: 0, phone: 0 });
     if (!salesCustomer) {
       return generalMessage(res, 404, "", false, "User not found.");
     }
@@ -50,7 +50,7 @@ saleCtrl.listByCustomer = async (req, res) => {
 
 saleCtrl.registerSale = async (req, res) => {
   try {
-    const { products } = req.body;
+    const { products, customer } = req.body;
     const countSales = await saleModel.count();
     const number = countSales + 1;
     var total = 0;
@@ -62,7 +62,7 @@ saleCtrl.registerSale = async (req, res) => {
     console.log(total);
     const newSale = new saleModel({
       number,
-      // customer,
+      customer,
       products,
       total,
     });
