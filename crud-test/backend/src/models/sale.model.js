@@ -33,4 +33,6 @@ const saleSchema = new Schema({
   },
 });
 
+
+
 module.exports = model("sales", saleSchema);

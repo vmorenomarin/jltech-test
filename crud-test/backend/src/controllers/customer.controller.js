@@ -22,7 +22,18 @@ customerCtrl.listCustomers = async (req, res) => {
 customerCtrl.listCustomerById = async (req, res) => {
   try {
     const { id } = req.params;
-    const customer = await customerModel.findById({ _id: id });
+    // customerModel;
+    const customer = await customerModel.aggregate([
+      {
+        $lookup: {
+          from: "sales",
+          localField: id,
+          foreignField: "customer._id",
+          as: "customer_purchases",
+        },
+      },
+    ]);
+    // const customer = await customer_extension.findById({ _id: id });
     if (!customer) {
       return generalMessage(res, 404, "", false, "No customer found.");
     }

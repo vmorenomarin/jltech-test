@@ -6,7 +6,9 @@ const { deleteImg } = require("../helpers/deleteImageCtrl.helper");
 productCtrl.listProducts = async (req, res) => {
   /** Returns all products in database. This method is available only for admin users */
   try {
-    const products = await productModel.find({}).populate("user", { password: 0, phone: 0 });
+    const products = await productModel
+      .find({})
+      .populate("user", { password: 0, phone: 0 });
     generalMessage(res, 200, products, true, "Data found");
   } catch (error) {
     generalMessage(res, 500, "", false, error.message);
@@ -17,7 +19,9 @@ productCtrl.listProductById = async (req, res) => {
   /** Returns a product by ID an returns the product data. */
   try {
     const { id } = req.params;
-    const product = await productModel.findById({ _id: id }).populate("user", { password: 0, phone: 0 });
+    const product = await productModel
+      .findById({ _id: id })
+      .populate("user", { password: 0, phone: 0 });
     if (!product) {
       return generalMessage(res, 404, "", false, "Product not found");
     }
@@ -70,6 +74,7 @@ productCtrl.updateProduct = async (req, res) => {
     const price = req.body.price || product.price;
     const stock = req.body.stock || product.stock;
     const category = req.body.category || product.category;
+    const user = req.body.user || product.user;
     if (req.file) {
       if (product.namaImg) {
         deleteImg(product.namaImg);
@@ -88,6 +93,7 @@ productCtrl.updateProduct = async (req, res) => {
       category,
       img,
       nameImg,
+      user,
     };
     await product.updateOne(updatedProduct);
     generalMessage(res, 200, updatedProduct.name, true, "Product updated");

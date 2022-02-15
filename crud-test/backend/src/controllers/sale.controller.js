@@ -50,7 +50,7 @@ saleCtrl.listByCustomer = async (req, res) => {
 
 saleCtrl.registerSale = async (req, res) => {
   try {
-    const { products, customer } = req.body;
+    const { products, customerId } = req.body;
     const countSales = await saleModel.count();
     const number = countSales + 1;
     var total = 0;
@@ -64,7 +64,7 @@ saleCtrl.registerSale = async (req, res) => {
     }
     const newSale = new saleModel({
       number,
-      customer,
+      customerId,
       products,
       total,
     });
