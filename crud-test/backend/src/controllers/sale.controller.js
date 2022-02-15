@@ -55,11 +55,13 @@ saleCtrl.registerSale = async (req, res) => {
     const number = countSales + 1;
     var total = 0;
     for (var order of products) {
-      let product_price = await productModel.findOne({ _id: order.product }, 'price');
+      let product_price = await productModel.findOne(
+        { _id: order.product },
+        "price"
+      );
       let price = product_price.price;
       total += price * order.amount;
     }
-    console.log(total);
     const newSale = new saleModel({
       number,
       customer,
@@ -68,6 +70,21 @@ saleCtrl.registerSale = async (req, res) => {
     });
     await newSale.save();
     generalMessage(res, 201, newSale, true, "Sale successfully saved.");
+  } catch (error) {
+    generalMessage(res, 500, "", false, error.message);
+  }
+};
+
+saleCtrl.deleteSale = async (req, res) => {
+  /** Deletes sale from database if a sale id is provided. This method is only valid for admin users. */
+  try {
+    const { id } = req.params;
+    const sale = await saleModel.findById({ _id: id });
+    if (!sale) {
+      return generalMessage(res, 404, "", false, "Sale not found.");
+    }
+    await saleModel.deleteOne({ _id: id });
+    generalMessage(res, 200, "", true, "Sale deleted.");
   } catch (error) {
     generalMessage(res, 500, "", false, error.message);
   }
