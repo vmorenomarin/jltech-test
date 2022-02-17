@@ -21,7 +21,6 @@ customerCtrl.listCustomers = async (req, res) => {
 
 customerCtrl.listCustomerById = async (req, res) => {
   try {
-    const { id } = req.params;
     // customerModel;
     const customer = await customerModel.aggregate([
       {
@@ -33,7 +32,6 @@ customerCtrl.listCustomerById = async (req, res) => {
         },
       },
     ]);
-    // const customer = await customer_extension.findById({ _id: id });
     if (!customer) {
       return generalMessage(res, 404, "", false, "No customer found.");
     }
