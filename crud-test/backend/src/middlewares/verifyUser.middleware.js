@@ -5,6 +5,7 @@ const userModel = require("../models/user.model");
 const secret = "Antaeus";
 
 const verifyUser = (roles = []) => {
+  /** Verifies token and user role.*/
   return (req, res, next) => {
     if (!req.headers.authorization) {
       return generalMessage(res, 401, "", false, "Not authorizated0.");
@@ -17,13 +18,13 @@ const verifyUser = (roles = []) => {
       if (error) {
         return generalMessage(res, 401, "", false, "Not authorizated2.");
       }
-      const { _id, role } = payload;
+      const { _id } = payload;
       const user = await userModel.findById({ _id });
-      if (!user || (roles.length && !roles.includes(role))) {
-        return generalMessage(res, 401, "", false, "Not authorizated3.");
+      if (!roles.includes(user.role)) {
+        return generalMessage(res, 401, "", false, "Not authorizated3");
       }
-
-      req.iduser = payload._id;
+      req.id = payload._id;
+      req.role = payload.role;
       next();
     });
   };
