@@ -3,7 +3,7 @@ const mongoose = require("mongoose");
 const { Schema, model } = mongoose;
 
 /** Returns an user schema.
- * Role could be seller, admin, warehouser, or HR.
+ * Role could be seller, admin, warehouser or HR.
  */
 const userSchema = new Schema(
   {
@@ -28,10 +28,11 @@ const userSchema = new Schema(
       type: Number,
       required: true,
     },
-    rol: {
+    role: {
       type: String,
       required: true,
-      default: "Seller",
+      default: ["Seller"],
+      enum: ["Seller", "Admin", "Warehouser", "HR"]
     },
     img: {
       type: String,
