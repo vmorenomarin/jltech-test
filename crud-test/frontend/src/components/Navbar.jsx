@@ -5,26 +5,40 @@ export const Navbar = () => {
   //   const { user, exit } = useUser();
 
   return (
-    <div role="navigation">
-      <nav className="navbar navbar-expanded-md navbar-dark bg-dark">
-        <NavLink className="navbar-brand" to="/
-        ">
-          Navbar\
-        </NavLink>
-        <button className="navbar-toggler" type="button" data-toggle="collapse">
-          <span className="nabvar-toggler-icon"></span>
-        </button>
+    <div >
+      <nav className="navbar navbar-expand-md navbar-dark px-2 bg-dark">
+        <div className="container-fluid">
+          <NavLink
+            className="navbar-brand"
+            to="/
+          "
+          >
+            Navbar <i className="bi bi-user"></i>
+          </NavLink>
 
-        <div className="collapse navbar-collapse" id="navbarContent">
-          <ul className="navbar-nav ms-auto">
-            <li className="nav-item">
-              <NavLink className="navlink" to="/">
-                Login
-              </NavLink>
-            </li>
-            <li className="nav-item">Register</li>
-            <li className="nav-item">Home</li>
-          </ul>
+            <button
+              className="navbar-toggler"
+              type="button"
+              data-bs-toggle="collapse"
+              data-bs-target="#navbarContent"
+            >
+              <span className="navbar-toggler-icon"></span>
+            </button>
+
+            <div className="collapse navbar-collapse" id="navbarContent">
+              <ul className="navbar-nav ms-auto text-end">
+                <li className="nav-item me-3">
+                  <NavLink className="nav-link" to="/">
+                  <i class="fa-solid fa-right-to-bracket"></i> Login 
+                  </NavLink>
+                </li>
+                <li className="nav-item me-3">
+                  <NavLink className="nav-link" to="/">
+                  <i class="fa-solid fa-user-plus"></i> Register 
+                  </NavLink>
+                </li>
+              </ul>
+          </div>
         </div>
       </nav>
     </div>
