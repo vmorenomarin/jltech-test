@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Products } from "./Products";
 
 export const Register = () => {
   return (
@@ -87,6 +88,7 @@ export const Register = () => {
           {/* Ends register card */}
         </div>
       </div>
+      <Products />
     </div>
   );
 };

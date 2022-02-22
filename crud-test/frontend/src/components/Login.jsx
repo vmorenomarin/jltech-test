@@ -1,4 +1,5 @@
 import React from "react";
+import { Products } from "./Products";
 
 export const Login = () => {
   return (
@@ -56,6 +57,9 @@ export const Login = () => {
           </div>
           {/* Ends Login card */}
         </div>
+      </div>
+      <div className="row">
+        <Products />
       </div>
     </div>
   );

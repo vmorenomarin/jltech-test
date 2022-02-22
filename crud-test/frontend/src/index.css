@@ -1,5 +1,5 @@
 body {
-  background-color: #f7fafc;
+  background-color: #ebebeb;
 }
 
 .card-widget {
@@ -17,6 +17,35 @@ a {
   color: #243e63;
 }
 
+.card-product {
+  border-radius: 10px;
+  transition-duration: 0.5s;
+}
+
+.card-product:hover {
+  box-shadow: 0 0.5rem 0.5rem rgb(0 0 0 / 40%);
+  transition-duration: 0.5s;
+}
+
+.btn-details, .btn-details:hover{
+    background-color: #ffc107;
+    border: none;
+}
+
+.btn-details:hover{
+    color: black;
+    border: none;
+}
+
+.btn-cart, .btn-cart:hover{
+    background-color: #243e63;
+    border: none;
+}
+
+.btn-cart:hover{
+    color: black;
+    border: none;
+}
 /* 
 palette color:
 
