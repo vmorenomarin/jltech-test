@@ -21,7 +21,7 @@ customerCtrl.listCustomers = async (req, res) => {
 
 customerCtrl.listCustomerById = async (req, res) => {
   try {
-    // customerModel;
+    const {id} = req.params;
     const customer = await customerModel.aggregate([
       {
         $lookup: {

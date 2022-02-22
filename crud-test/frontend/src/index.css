@@ -1,0 +1,26 @@
+body {
+  background-color: #f7fafc;
+}
+
+.card-widget {
+  color: #243e63;
+  /* background-color: rgb(228, 228, 228); */
+  box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 40%);
+  border-radius: 20px;
+}
+
+a {
+  text-decoration: none;
+}
+
+.header-2 {
+  color: #243e63;
+}
+
+/* 
+palette color:
+
+#FFBB00;
+#243e63;
+#F7FAFC;
+*/

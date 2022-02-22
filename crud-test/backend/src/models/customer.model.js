@@ -37,11 +37,11 @@ const customerSchema = new Schema(
     },
     img: {
       type: String,
-      required: true,
+      required: false,
     },
     nameImg: {
       type: String,
-      required: true,
+      required: false,
     },
     rate: {
       type: Number,
