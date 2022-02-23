@@ -5,21 +5,23 @@ export const Login = () => {
   return (
     <div className="container">
       <div className="row mt-3">
-        <div className="col-12 d-flex">
-          <div className="col-7">
+        <div className="d-flex flex-wrap justify-content-around align-items-center">
+          <div className="col-md-6 col-12 col-lg-8">
             <div className="header-2">
               <h1 className="fw-bold">Market Store</h1>
               <h3>Buy for one, buy for everyone!</h3>
             </div>
-            <img
-              src={"assets/imgs/Finance_professional.png"}
-              alt=""
-              className="img-fluid"
-            />
+            <div>
+              <img
+                src={"assets/imgs/Finance_professional.png"}
+                alt=""
+                className="img-fluid"
+              />
+            </div>
           </div>
 
           {/* Begin Register card  */}
-          <div className="col-5 p-2">
+          <div className="col-md-6 col-12 col-lg-4">
             <div className="card card-widget">
               <div className="card-header fw-bold">
                 <div className="row justify-content-evenly align-items-center">
@@ -51,6 +53,9 @@ export const Login = () => {
                     required
                     placeholder="Type your password"
                   />
+                  <a href="/" className="btn btn-warning form-control mt-3">
+                    Login
+                  </a>
                 </form>
               </div>
             </div>
@@ -58,9 +63,8 @@ export const Login = () => {
           {/* Ends Login card */}
         </div>
       </div>
-      <div className="row">
-        <Products />
-      </div>
+      <hr />
+      <Products />
     </div>
   );
 };

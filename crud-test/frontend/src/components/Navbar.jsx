@@ -13,7 +13,7 @@ export const Navbar = () => {
             to="/
           "
           >
-            Navbar <i className="bi bi-user"></i>
+            Market Store
           </NavLink>
 
             <button
