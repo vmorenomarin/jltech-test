@@ -1,7 +1,21 @@
-import React from "react";
+import { React, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Products } from "./Products";
 
 export const Register = () => {
+  const navegate = useNavigate();
+  const [customerData, setCustomerData] = useState({
+    name: "",
+    lastname: "",
+    email: "",
+    phone: "",
+    password: "",
+  });
+
+  const register = (e) => {
+    e.preventDefault();
+  };
+
   return (
     <div className="container">
       <div className="row mt-3">
@@ -36,7 +50,7 @@ export const Register = () => {
               </div>
 
               <div className="card-body">
-                <form action="onsubmit">
+                <form onSubmit={register}>
                   <label className="form-label fw-bold">Name:</label>
                   <i>
                     <input
@@ -46,6 +60,13 @@ export const Register = () => {
                       required
                       autoFocus
                       placeholder="Jhon"
+                      onChange={(e) =>
+                        setCustomerData({
+                          ...customerData,
+                          name: e.target.value,
+                        })
+                      }
+                      value={customerData.name}
                     />
                   </i>
                   <label className="form-label fw-bold mt-2">Lastname:</label>
@@ -55,6 +76,13 @@ export const Register = () => {
                     id="inputLastname"
                     required
                     placeholder="Doe"
+                    onChange={(e) =>
+                      setCustomerData({
+                        ...customerData,
+                        lastname: e.target.value,
+                      })
+                    }
+                    value={customerData.lastname}
                   />
                   <label className="form-label fw-bold mt-2">E-mail:</label>
                   <input
@@ -63,6 +91,13 @@ export const Register = () => {
                     id="inputEmail"
                     required
                     placeholder="Example: mail@mail.com."
+                    onChange={(e) =>
+                      setCustomerData({
+                        ...customerData,
+                        email: e.target.value,
+                      })
+                    }
+                    value={customerData.email}
                   />
                   <label className="form-label fw-bold mt-2">
                     Phone number:
@@ -73,6 +108,13 @@ export const Register = () => {
                     id="inputPhone"
                     required
                     placeholder="573008886644"
+                    onChange={(e) =>
+                      setCustomerData({
+                        ...customerData,
+                        phone: e.target.value,
+                      })
+                    }
+                    value={customerData.phone}
                   />
                   <label className="form-label fw-bold mt-2">Password:</label>
                   <input
@@ -81,8 +123,20 @@ export const Register = () => {
                     id="inputPassword"
                     required
                     placeholder="Type your password"
+                    onChange={(e) =>
+                      setCustomerData({
+                        ...customerData,
+                        password: e.target.value,
+                      })
+                    }
+                    value={customerData.password}
                   />
-                   <a href="/" className="btn btn-warning form-control mt-3">Register</a>
+                  <a
+                    type="submit"
+                    className="btn btn-warning form-control mt-3"
+                  >
+                    Register
+                  </a>
                 </form>
               </div>
             </div>

@@ -1,5 +1,6 @@
 import React from "react";
 import { Link } from "react-router-dom";
+import { Loading } from "./Loading";
 
 export const Products = () => {
   return (
