@@ -1,7 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { Products } from "./Products";
+import { useUser } from "./context/userContext";
 
 export const Login = () => {
+  const initialData = { email: "", password: "" };
+  const navigate = useNavigate();
+  const [userData, setUserData] = useState(initialData);
+
+  const { loading, loginUser } = useUser();
+
+  const login = (e) => {
+    e.preventDefault();
+    const user = userData;
+    loginUser(user, navigate);
+  };
+
   return (
     <div className="container">
       <div className="row mt-3">
@@ -36,7 +50,7 @@ export const Login = () => {
               </div>
 
               <div className="card-body">
-                <form action="onsubmit">
+                <form onSubmit={login}>
                   <label className="form-label fw-bold mt-2">E-mail:</label>
                   <input
                     type="email"
@@ -44,6 +58,8 @@ export const Login = () => {
                     id="inputEmail"
                     required
                     placeholder="Example: mail@mail.com."
+                    onChange={(e) => setUserData.email(e.target.value)}
+                    value={userData.email}
                   />
                   <label className="form-label fw-bold mt-2">Password:</label>
                   <input
@@ -52,6 +68,10 @@ export const Login = () => {
                     id="inputPassword"
                     required
                     placeholder="Type your password"
+                    onChange={(e) => {
+                      setUserData.password(e.target.value);
+                    }}
+                    value={userData.password}
                   />
                   <a href="/" className="btn btn-warning form-control mt-3">
                     Login

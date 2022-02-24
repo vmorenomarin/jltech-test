@@ -3,14 +3,18 @@ import { useNavigate } from "react-router-dom";
 import { Products } from "./Products";
 
 export const Register = () => {
+  
   const navegate = useNavigate();
-  const [customerData, setCustomerData] = useState({
+
+  const cInitialData = {
     name: "",
     lastname: "",
     email: "",
     phone: "",
     password: "",
-  });
+  };
+
+  const [customerData, setCustomerData] = useState(cInitialData);
 
   const register = (e) => {
     e.preventDefault();
