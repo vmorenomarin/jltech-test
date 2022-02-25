@@ -29,12 +29,12 @@ export const Navbar = () => {
               <ul className="navbar-nav ms-auto text-end">
                 <li className="nav-item me-3">
                   <NavLink className="nav-link" to="/login">
-                  <i class="fa-solid fa-right-to-bracket"></i> Login 
+                  <i className="fa-solid fa-right-to-bracket"></i> Login 
                   </NavLink>
                 </li>
                 <li className="nav-item me-3">
                   <NavLink className="nav-link" to="/register">
-                  <i class="fa-solid fa-user-plus"></i> Register 
+                  <i className="fa-solid fa-user-plus"></i> Register 
                   </NavLink>
                 </li>
               </ul>

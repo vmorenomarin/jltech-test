@@ -20,17 +20,17 @@ export const Product = () => {
         </div>
         <div className="col-md-6 col-lg-5 border border-1 rounded-3 p-4 h-100">
           <h3>Product Descriptiopn</h3>
-          <span class="badge rounded-pill text-warning border border-warning">
+          <span className="badge rounded-pill text-warning border border-warning">
             Disponibilidad 142
           </span>
           <h2 className="mt-3">$30000</h2>
           <p className="text-success">
-            {" "}
-            <i class="fa-solid fa-truck-fast"></i> Envío acordado con el
+  
+            <i className="fa-solid fa-truck-fast"></i> Envío acordado con el
             vendedor
           </p>
           <div className="card mb-2">
-            <table class="table table-sm table-striped rounded-4 rounded-1">
+            <table className="table table-sm table-striped rounded-4 rounded-1">
               <tbody>
                 <tr>
                   <th scope="row">Product</th>
@@ -47,12 +47,14 @@ export const Product = () => {
               </tbody>
             </table>
           </div>
-          <a href="" className="btn btn-warning d-block mb-2">
-            Comprar
-          </a>
-          <a href="" className="btn btn-success d-block mb-2b btn-cart">
-            Carrito
-          </a>
+          <div className="d-flex row">
+            <button type="submit" className="btn btn-warning d-block mb-2">
+              Buy
+            </button>
+            <button type="submit" className="btn btn-success d-block mb-2b btn-cart">
+              Cart
+            </button>
+          </div>
         </div>
       </div>
       <hr />
