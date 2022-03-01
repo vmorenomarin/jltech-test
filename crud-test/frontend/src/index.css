@@ -4,13 +4,8 @@ body {
 
 .card-widget {
   color: #243e63;
-  /* background-color: rgb(228, 228, 228); */
   box-shadow: 0 0.5rem 1rem rgb(0 0 0 / 40%);
   border-radius: 20px;
-}
-
-a {
-  text-decoration: none;
 }
 
 .header-2 {
@@ -27,30 +22,14 @@ a {
   transition-duration: 0.5s;
 }
 
-.btn-details, .btn-details:hover{
-    background-color: #ffc107;
-    border: none;
+.card-product .btn:hover {
+  box-shadow: 0 0.1rem 0.5rem rgb(0 0 0 / 40%);
+  transition-duration: 0.5s;
 }
 
-.btn-details:hover{
-    color: black;
-    border: none;
-}
-
-.btn-cart, .btn-cart:hover{
-    background-color: #243e63;
-    border: none;
-}
-
-.btn-cart:hover{
-    color: black;
-    border: none;
-}
-
-.badge{
+.badge {
   background-color: #ffc10721;
   box-shadow: 0 0.2rem 0.5rem rgb(255 193 7 / 40%);
-
 }
 /* 
 palette color:
