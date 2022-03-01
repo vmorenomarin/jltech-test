@@ -1,6 +1,6 @@
 import React, { useEffect } from "react";
 import { Link, NavLink } from "react-router-dom";
-import { Loading } from "./Loading";
+// import { Loading } from "./Loading";
 
 export const Products = () => {
   return (
