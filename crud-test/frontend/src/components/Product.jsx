@@ -1,7 +1,26 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 import { Products } from "./Products";
 
 export const Product = () => {
+  const { id } = useParams();
+  const [product, setProduct] = useState([]);
+
+  const getProduct = async () => {
+    try {
+      const { data } = await axios.get("/products/p/" + id);
+      setProduct(data.data);
+      var vendor = product.user.name;
+      console.log(vendor);
+    } catch (error) {
+      console.log(error.message);
+    }
+  };
+
+  useEffect(() => {
+    getProduct();
+  }, []);
   return (
     <div className="container justify-content-center">
       <div className="header-2 mt-3">
@@ -11,21 +30,16 @@ export const Product = () => {
       <div className="row bg-white mt-3 mx-auto rounded-2 justify-content-around p-3 col-lg-10 col-md-12">
         <div className=" col-md-6 col-lg-7 d-flex align-items-center">
           <div>
-            <img
-              src={"assets/imgs/shampoo.jpg"}
-              alt="Shampoo Tío Nacho"
-              className="img-fluid"
-            />
+            <img src={product.img} alt={product.name} className="img-fluid" />
           </div>
         </div>
         <div className="col-md-6 col-lg-5 border border-1 rounded-3 p-4 h-100">
-          <h3>Product Descriptiopn</h3>
+          <h3>{product.name}</h3>
           <span className="badge rounded-pill text-warning border border-warning">
-            Disponibilidad 142
+            Disponibilidad {product.stock}
           </span>
-          <h2 className="mt-3">$30000</h2>
+          <h2 className="mt-3">{product.price}</h2>
           <p className="text-success">
-  
             <i className="fa-solid fa-truck-fast"></i> Envío acordado con el
             vendedor
           </p>
@@ -34,15 +48,15 @@ export const Product = () => {
               <tbody>
                 <tr>
                   <th scope="row">Product</th>
-                  <td>Shampoo Tío Nacho</td>
+                  <td>{product.name}</td>
                 </tr>
-                <tr>
+                {/* <tr>
                   <th scope="row">Vendor</th>
-                  <td>Jacob</td>
-                </tr>
+                  <td>{vendor}</td>
+                </tr> */}
                 <tr>
                   <th scope="row">Category</th>
-                  <td>Larry the Bird</td>
+                  <td>{product.category}</td>
                 </tr>
               </tbody>
             </table>
@@ -51,7 +65,10 @@ export const Product = () => {
             <button type="submit" className="btn btn-warning d-block mb-2">
               Buy
             </button>
-            <button type="submit" className="btn btn-success d-block mb-2b btn-cart">
+            <button
+              type="submit"
+              className="btn btn-success d-block mb-2b btn-cart"
+            >
               Cart
             </button>
           </div>

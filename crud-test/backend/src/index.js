@@ -27,7 +27,7 @@ app.use(morgan("dev"));
 
 /** Use routes to controller methods */
 app.use("/user", require("./routes/user.route"));
-app.use("/product", require("./routes/product.route"));
+app.use("/products", require("./routes/product.route"));
 app.use("/customer", require("./routes/customer.route"));
 app.use("/sale", require("./routes/sale.route"));
 

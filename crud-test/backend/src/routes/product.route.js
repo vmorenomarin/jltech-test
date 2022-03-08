@@ -5,10 +5,10 @@ const upload = require("../middlewares/imgUploader.middleware");
 const verifyUser = require("../middlewares/verifyUser.middleware");
 const roles = require("../helpers/roles.helper");
 
-route.get("/", verifyUser(roles[0]), productCtrl.listProducts);
+route.get("/", productCtrl.listProducts);
 route.get(
   "/p/:id",
-  verifyUser([roles[0], roles[1]]),
+  // verifyUser([roles[0], roles[4]]),
   productCtrl.listProductById
 );
 route.post(
