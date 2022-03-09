@@ -1,6 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { Route, Routes, useParams } from "react-router-dom";
 import { Products } from "./Products";
 
 export const Product = () => {
@@ -75,7 +75,9 @@ export const Product = () => {
         </div>
       </div>
       <hr />
-      <Products />
+      <Routes>
+        <Route path="/products" element={<Products />} />
+      </Routes>
     </div>
   );
 };

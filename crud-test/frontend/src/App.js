@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Route, Routes, Navigate} from "react-router-dom";
+import {
+  BrowserRouter as Router,
+  Route,
+  Routes,
+  Navigate,
+} from "react-router-dom";
 import { Navbar } from "./components/Navbar";
 import { Register } from "./components/Register";
 import { Login } from "./components/Login";
@@ -24,7 +29,7 @@ function App() {
         <Route path="/login" element={<Login />} />
         <Route path="/" element={<Products />} />
         <Route path="/products/" element={<Products />} />
-        <Route path="/product/:id" element={<Product />} />
+        <Route path="/product/:id/*" element={<Product />}/>
         <Route path="/user" element={<User />} />
       </Routes>
     </Router>

@@ -1,12 +1,13 @@
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
-import { Link, Navigate} from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import { Loading } from "./Loading";
 
 export const Products = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
+  const navigate = useNavigate();
 
   const getProducts = useCallback(async () => {
     try {
@@ -46,12 +47,12 @@ export const Products = () => {
               <div className="card card-product">
                 <img
                   src={product.img}
-                  className="card-img-top"
+                  className="card-img-top img-fluid"
                   alt={product.name}
                 />
                 <hr />
                 <div className="card-body">
-                  <h4 className="card-title">{product.name}</h4>
+                  <h5 className="card-title">{product.name}</h5>
                   <div className="card-text">
                     <i className="fa-solid fa-dollar"></i> {product.price}
                   </div>
@@ -60,12 +61,14 @@ export const Products = () => {
                   <Link to="/" className="btn btn-warning my-1">
                     <i className="fa-solid fa-cart-plus"></i> Car
                   </Link>
-                  <Link
-                    to={"/product/" + product._id}
+                  <button
+                    onClick={() => {
+                      navigate(`/product/${product._id}`);
+                    }}
                     className="btn btn-primary my-1"
                   >
                     <i className="fa-solid fa-circle-info"></i> See
-                  </Link>
+                  </button>
                 </div>
               </div>
             </div>
