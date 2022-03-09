@@ -1,13 +1,12 @@
 import axios from "axios";
 import React, { useCallback, useEffect, useState } from "react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link} from "react-router-dom";
 import Swal from "sweetalert2";
 import { Loading } from "./Loading";
 
 export const Products = () => {
   const [products, setProducts] = useState([]);
   const [loading, setLoading] = useState(false);
-  const navigate = useNavigate();
 
   const getProducts = useCallback(async () => {
     try {
@@ -61,14 +60,12 @@ export const Products = () => {
                   <Link to="/" className="btn btn-warning my-1">
                     <i className="fa-solid fa-cart-plus"></i> Car
                   </Link>
-                  <button
-                    onClick={() => {
-                      navigate(`/product/${product._id}`);
-                    }}
+                  <Link
+                    to={"/product/"+product._id}
                     className="btn btn-primary my-1"
                   >
                     <i className="fa-solid fa-circle-info"></i> See
-                  </button>
+                  </Link>
                 </div>
               </div>
             </div>

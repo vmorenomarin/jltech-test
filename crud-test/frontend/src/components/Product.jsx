@@ -1,26 +1,24 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
-import { Route, Routes, useParams } from "react-router-dom";
+import React, { useCallback, useEffect, useState } from "react";
+import {useParams } from "react-router-dom";
 import { Products } from "./Products";
 
 export const Product = () => {
   const { id } = useParams();
   const [product, setProduct] = useState([]);
 
-  const getProduct = async () => {
+  const getProduct = useCallback( async () => {
     try {
       const { data } = await axios.get("/products/p/" + id);
       setProduct(data.data);
-      var vendor = product.user.name;
-      console.log(vendor);
     } catch (error) {
       console.log(error.message);
     }
-  };
+  },[id]);
 
   useEffect(() => {
     getProduct();
-  }, []);
+  }, [getProduct]);
   return (
     <div className="container justify-content-center">
       <div className="header-2 mt-3">
@@ -75,9 +73,8 @@ export const Product = () => {
         </div>
       </div>
       <hr />
-      <Routes>
-        <Route path="/products" element={<Products />} />
-      </Routes>
+
+      <Products />
     </div>
   );
 };
