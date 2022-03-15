@@ -1,5 +1,6 @@
 body {
   background-color: #ebebeb;
+  height: 100%;
 }
 
 .card-widget {
@@ -30,6 +31,11 @@ body {
 .badge {
   background-color: #ffc10721;
   box-shadow: 0 0.2rem 0.5rem rgb(255 193 7 / 40%);
+}
+
+#aside-container {
+  min-height: 100%;
+  /* background-color: #243e63; */
 }
 /* 
 palette color:
