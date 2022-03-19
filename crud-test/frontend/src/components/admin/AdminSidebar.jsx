@@ -23,32 +23,32 @@ export const AdminSidebar = () => {
           <span className="ms-2 text-white">Admin</span>
         </div>
         <ul
-          class="dropdown-menu dropdown-menu-dark"
+          className="dropdown-menu dropdown-menu-dark"
           aria-labelledby="dropdownMenuButton1"
         >
           <li>
-            <a class="dropdown-item" href="#">
+            <a className="dropdown-item" href="#">
               Action
             </a>
           </li>
           <li>
-            <a class="dropdown-item" href="#">
+            <a className="dropdown-item" href="#">
               Another action
             </a>
           </li>
           <li>
-            <a class="dropdown-item" href="#">
+            <a className="dropdown-item" href="#">
               Something else here
             </a>
           </li>
         </ul>
       </div>
 
-      <div class="btn-group-vertical d-block " role="group">
+      <div className="btn-group-vertical d-block " role="group">
         <Link
           to="/admin/"
           type="button"
-          class="btn btn-outline-secondary d-flex"
+          className="btn btn-outline-secondary d-flex"
         >
           <i className="fa-solid fa-home"></i>
           <span className="d-none d-md-inline ms-2 ">Home</span>
@@ -56,16 +56,16 @@ export const AdminSidebar = () => {
         <Link
           to="/admin/users/"
           type="button"
-          class="btn btn-outline-secondary d-flex"
+          className="btn btn-outline-secondary d-flex"
         >
           <i className="fa-solid fa-id-card-clip"></i>
           <span className="d-none d-md-inline ms-2">Users</span>
         </Link>
-        <butto type="button" class="btn btn-outline-secondary">
+        <button type="button" className="btn btn-outline-secondary">
           <i className="fa fa-users"></i>
           <span className="d-none d-md-inline ms-2">Customers</span>
-        </butto>
-        <button type="button" class="btn btn-outline-secondary d-flex">
+        </button>
+        <button type="button" className="btn btn-outline-secondary d-flex">
           <i className="fa-solid fa-file-invoice"></i>
           <span className="d-none d-md-inline ms-2">Invoices</span>
         </button>

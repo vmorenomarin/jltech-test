@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 import React, { useState, useEffect, createContext, useContext } from "react";
 
 const UserContext = createContext();
-const initialState = { login: false, name: "", token: "", id: "" };
+const initialState = { login: false, name: "", token: "", id: "", role: "" };
 
 export const UserProvider = (props) => {
   const [user, setUser] = useState(initialState);
@@ -25,6 +25,7 @@ export const UserProvider = (props) => {
           name: data.data.name,
           token: data.data.token,
           id: data.data.id,
+          role: data.data.role,
         };
         localStorage.setItem("user", JSON.stringify(userLogin));
         setUser(userLogin);
@@ -34,7 +35,7 @@ export const UserProvider = (props) => {
           showConfirmButton: false,
           timer: 1500,
         });
-        navigate("/products");
+        userLogin.role === "Admin" ? navigate("/admin") : navigate("/products");
       }
     } catch (error) {
       setLoading(false);
@@ -61,6 +62,7 @@ export const UserProvider = (props) => {
           name: data.data.name,
           token: data.data.token,
           id: data.data.id,
+          role: data.data.role,
         };
         localStorage.setItem("user", JSON.stringify(userLogin));
         setUser(userLogin);

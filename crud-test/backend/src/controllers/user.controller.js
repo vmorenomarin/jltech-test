@@ -98,7 +98,7 @@ userCtrl.login = async (req, res) => {
       return generalMessage(
         res,
         201,
-        { id: user._id, name: user.name, token },
+        { id: user._id, name: user.name, token, role: user.role },
         true,
         `Welcome ${user.name}`
       );
