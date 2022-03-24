@@ -15,6 +15,7 @@ import { User } from "./components/User";
 import { useUser } from "./context/UserContext";
 import { AdminUsersView } from "./components/admin/AdminUsersView";
 import { AdminSidebar } from "./components/admin/AdminSidebar";
+import { AdminUserView } from "./components/admin/AdminUserView";
 
 function App() {
   const { user } = useUser();
@@ -38,8 +39,9 @@ function App() {
         <Route path="/products/" element={<Products />} />
         <Route path="/product/:id/" element={<Product />} />
         <Route path="/user" element={<User />} />
-        <Route strict path="/admin/"  element={Private(<Admin />)} />
+        <Route path="/admin/"  element={Private(<Admin />)} />
         <Route path="/admin/users" element={Private(<AdminUsersView />)} />
+        <Route path="/admin/users/:id" element={Private(<AdminUserView />)} />
       </Routes>
     </Router>
   );

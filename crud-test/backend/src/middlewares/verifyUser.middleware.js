@@ -8,7 +8,7 @@ const verifyUser = (roles = []) => {
   /** Verifies token and user role.*/
   return (req, res, next) => {
     if (!req.headers.authorization) {
-      return generalMessage(res, 401, "", false, "Not authorizated0.");
+      return generalMessage(res, 401, "", false, "Not authorizated.");
     }
     const token = req.headers.authorization.split(" ")[1];
     if (token == null) {
