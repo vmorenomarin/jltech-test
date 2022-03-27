@@ -39,7 +39,10 @@ function App() {
         <Route path="/products/" element={<Products />} />
         <Route path="/product/:id/" element={<Product />} />
         <Route path="/user" element={<User />} />
-        <Route path="/admin/"  element={Private(<Admin />)} />
+        <Route
+          path="/admin/"
+          element={user.role === "Admin" ? Private(<Admin />) : <Products />}
+        />
         <Route path="/admin/users" element={Private(<AdminUsersView />)} />
         <Route path="/admin/users/:id" element={Private(<AdminUserView />)} />
       </Routes>

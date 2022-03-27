@@ -4,6 +4,7 @@ import Swal from "sweetalert2";
 import { AdminSidebar } from "./AdminSidebar";
 import { useUser } from "../../context/UserContext";
 import { Link, useParams } from "react-router-dom";
+import { Modal, Button, Form } from "react-bootstrap";
 
 export const AdminUserView = () => {
   const { user } = useUser();
@@ -31,6 +32,12 @@ export const AdminUserView = () => {
     }
   }, []);
 
+  const [show, setShow] = useState(false);
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
+  const updateUser = async (userToUpdate) => {};
+
   useEffect(() => {
     getUser();
   }, [getUser]);
@@ -43,7 +50,11 @@ export const AdminUserView = () => {
           <div className="card bg-dark ">
             <div className="row">
               <div className="col-sm-5">
-                <img src={userdb.img} className="card-img-top m-w-50" alt="..." />
+                <img
+                  src={userdb.img}
+                  className="card-img-top m-w-25"
+                  alt="..."
+                />
               </div>
               <div className="col-sm-7">
                 <div className="card-body">
@@ -51,13 +62,87 @@ export const AdminUserView = () => {
                     {userdb.name} {userdb.lastname}
                   </h5>
                   <p className="card-text">
+                    <i className="fa fa-envelope me-2"></i>
                     {userdb.email}
                   </p>
+                  <p className="card-text ">
+                    <i className="fa-regular fa-address-card me-2"></i>
+                    {userdb.role}
+                  </p>
+                  <p className="card-text">
+                    <i className="fa fa-phone me-2"></i>
+                    {userdb.phone}
+                  </p>
                 </div>
+              </div>
+              <div className="card-footer d-flex justify-content-evenly">
+                <button
+                  type="button"
+                  className="btn btn-primary"
+                  onClick={() => handleShow()}
+                >
+                  <i className="fa fa-edit"></i> Edit
+                </button>
+                <button className="btn btn-danger">
+                  <i className="fa fa-trash"></i> Delete
+                </button>
               </div>
             </div>
           </div>
         </div>
+
+        <Modal show={show} onHide={handleClose} variant="dark">
+          <Modal.Header closeButton>
+            <Modal.Title>Edit user data</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form>
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>Name</Form.Label>
+                <Form.Control
+                  type="text"
+                  value={userdb.name}
+                  onChange={(e) =>
+                    setUserdb({ ...userdb, name: e.target.value })
+                  }
+                />
+                <Form.Text className="text-muted">
+                  We'll never share your email with anyone else.
+                </Form.Text>
+              </Form.Group>
+              <Form.Group className="mb-3" controlId="formBasicEmail">
+                <Form.Label>Email address</Form.Label>
+                <Form.Control
+                  type="email"
+                  value={userdb.email}
+                  onChange={(e) =>
+                    setUserdb({ ...userdb, email: e.target.value })
+                  }
+                />
+                <Form.Text className="text-muted">
+                  We'll never share your email with anyone else.
+                </Form.Text>
+              </Form.Group>
+
+              <Form.Group className="mb-3" controlId="formBasicPassword">
+                <Form.Label>Password</Form.Label>
+                <Form.Control type="password" placeholder="Password" />
+              </Form.Group>
+            </Form>
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Close
+            </Button>
+            <Button
+              variant="primary"
+              onClick={(e) => updateUser()}
+              type="submit"
+            >
+              Save Changes
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     </div>
   );
