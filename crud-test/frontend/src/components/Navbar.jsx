@@ -56,7 +56,7 @@ export const Navbar = () => {
                   </NavLink>
                 </li>
                 <li className="nav-item me-3">
-                  <NavLink className="nav-link" to={"/"} onClick={() => exit()} activeClassName="active">
+                  <NavLink className="nav-link" to={"/"} onClick={() => exit()}>
                     <i className="fa-solid fa-close"></i> Exit
                   </NavLink>
                 </li>
