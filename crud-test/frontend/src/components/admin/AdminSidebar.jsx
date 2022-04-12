@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 
-export const AdminSidebar = () => {
+export const AdminSidebar = (props) => {
   return (
     <div
       id="aside-container"
@@ -17,7 +17,7 @@ export const AdminSidebar = () => {
           <img
             className="img-fluid rounded-circle w-25 d-none d-md-inline"
             type="button"
-            src={"https://github.com/mdo.png"}
+            src={props.img}
             alt="Admin"
           />
           <span className="ms-2 text-white">Admin</span>

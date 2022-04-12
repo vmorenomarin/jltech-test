@@ -3,7 +3,6 @@ import {
   Route,
   Routes,
   Navigate,
-  useNavigate,
 } from "react-router-dom";
 import { Navbar } from "./components/Navbar";
 import { Register } from "./components/Register";
@@ -14,7 +13,6 @@ import { Product } from "./components/Product";
 import { User } from "./components/User";
 import { useUser } from "./context/UserContext";
 import { AdminUsersView } from "./components/admin/AdminUsersView";
-import { AdminSidebar } from "./components/admin/AdminSidebar";
 import { AdminUserView } from "./components/admin/AdminUserView";
 
 function App() {

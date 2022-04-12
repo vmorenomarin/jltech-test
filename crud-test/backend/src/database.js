@@ -1,5 +1,7 @@
+require("dotenv").config();
 const mongoose = require("mongoose");
-const URI = "mongodb://localhost/jltech_db";
+
+const URI = process.env.MONGO_URI;
 
 mongoose
   .connect(URI, {

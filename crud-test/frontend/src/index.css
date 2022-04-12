@@ -37,6 +37,11 @@ body {
   min-height: 100%;
   /* background-color: #243e63; */
 }
+
+
+#userSidepanel {
+  background-color: #111111;
+}
 /* 
 palette color:
 

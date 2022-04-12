@@ -1,3 +1,4 @@
+require("dotenv").config();
 const customerCtrl = {};
 const customerModel = require("../models/customer.model");
 const { generalMessage } = require("../helpers/messages.helper");
@@ -7,7 +8,7 @@ const auth = require("../helpers/auth.helper");
 const { deleteImg } = require("../helpers/deleteImageCtrl.helper");
 
 // Next line will be delete. This is for test purposes.
-const secret = "Antaeus";
+const secret = process.env.SECRET
 
 customerCtrl.listCustomers = async (req, res) => {
   /** Returns all customers in database. This method is available only for admin users */

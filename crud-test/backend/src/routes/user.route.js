@@ -13,7 +13,7 @@ route.put(
   "/:id",
   verifyUser(roles),
   currentUser,
-  upload.single("img"),
+  upload.single("nameImg"),
   userCtrl.updateUser
 );
 route.delete("/:id", verifyUser(roles[0]), userCtrl.deleteUser);
