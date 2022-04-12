@@ -4,7 +4,7 @@ const cors = require("cors");
 
 require("./database");
 
-const app = express();
+const app = express(); 
 
 app.set("port", 4000);
 

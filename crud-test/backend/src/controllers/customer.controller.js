@@ -8,7 +8,7 @@ const auth = require("../helpers/auth.helper");
 const { deleteImg } = require("../helpers/deleteImageCtrl.helper");
 
 // Next line will be delete. This is for test purposes.
-const secret = process.env.SECRET
+const secret = process.env.SECRET;
 
 customerCtrl.listCustomers = async (req, res) => {
   /** Returns all customers in database. This method is available only for admin users */
@@ -22,7 +22,7 @@ customerCtrl.listCustomers = async (req, res) => {
 
 customerCtrl.listCustomerById = async (req, res) => {
   try {
-    const {id} = req.params;
+    const { id } = req.params;
     const customer = await customerModel.aggregate([
       {
         $lookup: {

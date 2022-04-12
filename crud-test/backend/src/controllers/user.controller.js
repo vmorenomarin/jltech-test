@@ -3,7 +3,7 @@ const userCtrl = {};
 const userModel = require("../models/user.model");
 const { generalMessage } = require("../helpers/messages.helper");
 const jsw = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcrypt"); 
 const auth = require("../helpers/auth.helper");
 const { deleteImg } = require("../helpers/deleteImageCtrl.helper");
 
@@ -18,7 +18,7 @@ userCtrl.listUsers = async (req, res) => {
   } catch (error) {
     generalMessage(res, 500, "", false, error.message);
   }
-};
+}; 
 
 userCtrl.listUserById = async (req, res) => {
   /** Returns an user by ID an returns the user data. */
