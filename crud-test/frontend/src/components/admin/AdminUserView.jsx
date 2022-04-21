@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { AdminSidebar } from "./AdminSidebar";
 import { useUser } from "../../context/UserContext";
-import { Link, useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { Modal, Button, Form } from "react-bootstrap";
 
 export const AdminUserView = () => {
@@ -81,10 +81,15 @@ export const AdminUserView = () => {
 
   return (
     <div className="container-fluid bg-dark text-white d-flex flex-nowrap min-vh-100 ">
-      <AdminSidebar img={userdb.img} />
+      <AdminSidebar img={user.img} />
       <div className="d-flex flex-column col-10 col-sm-10">
         <div className="border border-danger rounded p-3">
-          <h4>User detail</h4>
+          <div className="row">
+            <h4>User detail</h4>{" "}
+            <NavLink className="btn btn-success">
+              <i className="fa-solid fa-plus"></i> Add user
+            </NavLink>
+          </div>
           <div className="card bg-dark ">
             <div className="row">
               <div className="col-sm-5">
@@ -198,8 +203,6 @@ export const AdminUserView = () => {
                   }
                 />
               </Form.Group>
-
-          
 
               <Button variant="primary" onClick={handleClose} type="submit">
                 Save Changes

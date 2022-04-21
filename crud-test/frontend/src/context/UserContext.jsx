@@ -3,7 +3,7 @@ import Swal from "sweetalert2";
 import React, { useState, useEffect, createContext, useContext } from "react";
 
 const UserContext = createContext();
-const initialState = { login: false, name: "", token: "", id: "", role: "" };
+const initialState = { login: false, name: "", token: "", id: "", role: "", img:"" };
 
 export const UserProvider = (props) => {
   const [user, setUser] = useState(initialState);
@@ -26,6 +26,7 @@ export const UserProvider = (props) => {
           token: data.data.token,
           id: data.data.id,
           role: data.data.role,
+          img: data.data.img,
         };
         localStorage.setItem("user", JSON.stringify(userLogin));
         setUser(userLogin);

@@ -3,7 +3,7 @@ const userCtrl = {};
 const userModel = require("../models/user.model");
 const { generalMessage } = require("../helpers/messages.helper");
 const jsw = require("jsonwebtoken");
-const bcrypt = require("bcrypt");
+const bcrypt = require("bcrypt"); 
 const auth = require("../helpers/auth.helper");
 const { deleteImg } = require("../helpers/deleteImageCtrl.helper");
 
@@ -18,7 +18,7 @@ userCtrl.listUsers = async (req, res) => {
   } catch (error) {
     generalMessage(res, 500, "", false, error.message);
   }
-};
+}; 
 
 userCtrl.listUserById = async (req, res) => {
   /** Returns an user by ID an returns the user data. */
@@ -57,7 +57,6 @@ userCtrl.registerUser = async (req, res) => {
       password: auth.encryptPassword(password),
       phone,
     });
-    console.log('Here 2');
     const { filename } = req.file;
     newUser.setImgUrl(filename);
     await newUser.save();
@@ -70,7 +69,7 @@ userCtrl.registerUser = async (req, res) => {
       201,
       token,
       true,
-      `User account successfully created. Welcome ${newUser.name}.`
+      `User account successfully created. Welcome ${newUser.name}`
     );
   } catch (error) {
     generalMessage(res, 500, "", false, error.message);
@@ -100,7 +99,7 @@ userCtrl.login = async (req, res) => {
       return generalMessage(
         res,
         201,
-        { id: user._id, name: user.name, token, role: user.role, img: user.img },
+        { id: user._id, name: user.name, token, role: user.role },
         true,
         `Welcome ${user.name}`
       );

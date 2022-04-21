@@ -7,6 +7,7 @@ const verifyUser = require("../middlewares/verifyUser.middleware");
 const currentUser = require("../middlewares/currentUser.middleware");
 
 route.get("/", verifyUser(roles[0]), userCtrl.listUsers);
+route.post("/", verifyUser(roles[0]), upload.single("img"), userCtrl.registerUser);
 route.get("/u/:id", verifyUser(roles), currentUser, userCtrl.listUserById);
 route.post("/login", userCtrl.login);
 route.put(
