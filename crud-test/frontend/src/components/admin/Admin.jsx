@@ -4,7 +4,6 @@ import { useUser } from "./../../context/UserContext";
 
 export const Admin = () => {
   const { user } = useUser();
-  console.log(user);
   return (
     <div className="container-fluid bg-dark text-white d-flex flex-nowrap min-vh-100">
       <AdminSidebar img={user.img}/>

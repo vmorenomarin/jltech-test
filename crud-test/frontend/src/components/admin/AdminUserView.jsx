@@ -51,7 +51,6 @@ export const AdminUserView = () => {
         });
         e.target.value = " ";
       } else {
-        console.log("I'm here");
         setUserdb({ ...userdb, nameImg: img.name });
       }
     }
@@ -85,10 +84,7 @@ export const AdminUserView = () => {
       <div className="d-flex flex-column col-10 col-sm-10">
         <div className="border border-danger rounded p-3">
           <div className="row">
-            <h4>User detail</h4>{" "}
-            <NavLink className="btn btn-success">
-              <i className="fa-solid fa-plus"></i> Add user
-            </NavLink>
+            <h4>User detail</h4>
           </div>
           <div className="card bg-dark ">
             <div className="row">
@@ -96,7 +92,7 @@ export const AdminUserView = () => {
                 <img
                   src={userdb.img}
                   className="card-img-top m-w-25"
-                  alt="..."
+                  alt={userdb.name}
                 />
               </div>
               <div className="col-sm-7">

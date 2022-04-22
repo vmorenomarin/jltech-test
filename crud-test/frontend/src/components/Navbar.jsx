@@ -43,7 +43,7 @@ export const Navbar = () => {
             ) : (
               <ul className="navbar-nav ms-auto text-end">
                 <li className="nav-item me-3">
-                  <NavLink className="nav-link" to="/">
+                  <NavLink className="nav-link" to={"/user/"+user.id}>
                     <i className="fa-solid fa-user"></i> {user.name}
                   </NavLink>
                 </li>

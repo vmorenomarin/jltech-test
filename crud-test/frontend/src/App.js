@@ -36,7 +36,7 @@ function App() {
         <Route path="/" element={<Products />} />
         <Route path="/products/" element={<Products />} />
         <Route path="/product/:id/" element={<Product />} />
-        <Route path="/user" element={<User />} />
+        <Route path="/user/:id" element={<User />} />
         <Route
           path="/admin/"
           element={user.role === "Admin" ? Private(<Admin />) : <Products />}
