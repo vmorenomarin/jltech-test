@@ -23,6 +23,11 @@ route.put(
   upload.single("img"),
   productCtrl.updateProduct
 );
+route.get(
+  "/user/:id",
+  verifyUser([roles[0], roles[1]]),
+  productCtrl.productsByUser
+);
 route.delete("/:id", verifyUser(roles[0]), productCtrl.deleteProduct);
 
 module.exports = route;

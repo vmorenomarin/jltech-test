@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { UserSidebar } from "./UserSidebar";
+import { UserProducts } from "./UserProducts";
 import { useUser } from "../context/UserContext";
 import Swal from "sweetalert2";
 import axios from "axios";
@@ -23,22 +23,34 @@ export const User = () => {
     }
   };
 
+  const getUserProducts = async () => {
+    try {
+      const {data} = await axios.get
+    } catch (error) {
+      
+    }
+  };
+
   useEffect(() => {
     getUserData();
   }, []);
 
   return (
-    <div className="container d-flex justify-content-center" id="userContainer">
+    <div
+      className="container d-flex flex-column justify-content-center"
+      id="userContainer"
+    >
       <div class="card mt-3" style={{ maxWidth: "700px" }}>
-        <div class="row g-0">
-          <div class="col-md-4 ">
+        <div class="row g-1">
+          <div class="col-md-4 col-sm-8">
             <img
               src={currentUser.img}
-              class="img-fluid rounded-start"
+              class="img-fluid"
               alt={currentUser.name + " " + currentUser.lastname}
+              style={{ maxWidth: "200px" }}
             />
           </div>
-          <div class="col-md-8">
+          <div class="col-md-8 col-sm-8">
             <div class="card-body">
               {currentUser.name} {currentUser.lastname}
               <h5 class="card-title "></h5>
@@ -56,9 +68,13 @@ export const User = () => {
                   {currentUser.phone}
                 </p>
                 <hr />
-                <div className="d-flex justify-content-evenly flex-wrap">
-                  <button className="btn btn-warning btn-sm m-1"> <i className="fa fa-pen me-2"></i>Edit my info</button>
-                  <button className="btn btn-danger btn-sm m-1"> <i className="fa fa-key me-2"></i>Cahnge passworrd</button>
+                <div className="d-flex justify-content-evenly  flex-wrap">
+                  <button className="btn btn-warning btn-sm m-1">
+                    <i className="fa fa-pen me-2"></i>Edit my info
+                  </button>
+                  <button className="btn btn-danger btn-sm m-1">
+                    <i className="fa fa-key me-2"></i>Change password
+                  </button>
                 </div>
               </p>
             </div>
@@ -66,7 +82,7 @@ export const User = () => {
         </div>
       </div>
 
-      <div></div>
+      <UserProducts products={"..."} />
     </div>
   );
 };

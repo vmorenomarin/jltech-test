@@ -96,7 +96,20 @@ productCtrl.updateProduct = async (req, res) => {
       user,
     };
     await product.updateOne(updatedProduct);
-    generalMessage(res, 200, updatedProduct.name, true, "Product updated");
+    generalMessage(res, 200, updatedProduct.name, true, "Product updated.");
+  } catch (error) {
+    generalMessage(res, 500, "", false, error.message);
+  }
+};
+
+productCtrl.productsByUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const products = await productModel.find({ user: id });
+    if (!products) {
+      return generalMessage(res, 404, "", false, "User has not products.");
+    }
+    generalMessage(res, 200, products, true, "Products found.");
   } catch (error) {
     generalMessage(res, 500, "", false, error.message);
   }
