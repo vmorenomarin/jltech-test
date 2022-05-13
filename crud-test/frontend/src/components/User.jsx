@@ -1,15 +1,15 @@
 import React, { useEffect, useState } from "react";
 import { UserProducts } from "./UserProducts";
 import { useUser } from "../context/UserContext";
-import Swal from "sweetalert2";
+// import Swal from "sweetalert2";
 import axios from "axios";
 import { useParams } from "react-router-dom";
 
 export const User = () => {
   const [currentUser, setCurrentUser] = useState([]);
+  const [userProducts, setUserProducts] = useState([]);
   const { id } = useParams();
   const { user } = useUser();
-  console.log(id, user.id);
   const options = { headers: { authorization: "Bearer " + user.token } };
 
   const getUserData = async () => {
@@ -25,14 +25,27 @@ export const User = () => {
 
   const getUserProducts = async () => {
     try {
-      const {data} = await axios.get
+      const { data } = await axios.get("/products/user/" + id, options);
+      // const products = [];
+      // data.data.forEach((product) => {
+      //   console.log(product.user._id, "user:", id);
+      //   if (product.user._id === id) {
+      //     products.push(product);
+      //   }
+      // });
+      // console.log(products);
+      setUserProducts(data.data);
+      console.log(userProducts);
     } catch (error) {
-      
+      if (!error.response.data.ok) {
+        return console.log(error.message.data.message);
+      }
     }
   };
 
   useEffect(() => {
     getUserData();
+    getUserProducts();
   }, []);
 
   return (
@@ -40,21 +53,21 @@ export const User = () => {
       className="container d-flex flex-column justify-content-center"
       id="userContainer"
     >
-      <div class="card mt-3" style={{ maxWidth: "700px" }}>
-        <div class="row g-1">
-          <div class="col-md-4 col-sm-8">
+      <div className="card mt-3" style={{ maxWidth: "700px" }}>
+        <div className="row g-1">
+          <div className="col-md-4 col-sm-8">
             <img
               src={currentUser.img}
-              class="img-fluid"
+              className="img-fluid"
               alt={currentUser.name + " " + currentUser.lastname}
               style={{ maxWidth: "200px" }}
             />
           </div>
-          <div class="col-md-8 col-sm-8">
-            <div class="card-body">
+          <div className="col-md-8 col-sm-8">
+            <div className="card-body">
               {currentUser.name} {currentUser.lastname}
-              <h5 class="card-title "></h5>
-              <p class="card-text">
+              <h5 className="card-title "></h5>
+              <div className="card-text">
                 <p className="card-text">
                   <i className="fa fa-envelope me-2"></i>
                   {currentUser.email}
@@ -67,7 +80,6 @@ export const User = () => {
                   <i className="fa fa-phone me-2"></i>
                   {currentUser.phone}
                 </p>
-                <hr />
                 <div className="d-flex justify-content-evenly  flex-wrap">
                   <button className="btn btn-warning btn-sm m-1">
                     <i className="fa fa-pen me-2"></i>Edit my info
@@ -76,13 +88,13 @@ export const User = () => {
                     <i className="fa fa-key me-2"></i>Change password
                   </button>
                 </div>
-              </p>
+              </div>
             </div>
           </div>
         </div>
       </div>
 
-      <UserProducts products={"..."} />
+      <UserProducts products={userProducts} />
     </div>
   );
 };

@@ -1,23 +1,30 @@
 import React from "react";
+import moment from "moment";
 
 export const UserProducts = (props) => {
   return (
     <div id="userProduct" className="row">
       <h1 className="display-6">My Products</h1>
-      <div className="container rounded bg-white p-3">
-        {/* {props.products.map((product) => ( */}
-          <div className="card col-3">
+      <div className="container d-flex flex-row rounded bg-white p-3">
+        {props.products.map((product) => (
+          <div className="card col-3 mx-2" key={product._id}>
             <div className="card-header">
-              <h6>{"product.name"}</h6>
-              <span className="small">{"product.code"}</span>
+              <h6>{product.name}</h6>
+              <span className="small">{product.code}</span>
             </div>
-            <img src={"product.img"} alt={"product.name"} className="card-img-top" />
+            <img
+              src={product.img}
+              alt={product.name}
+              className="card-img-top"
+            />
             <div className="card-body">
+              <span className="fw-bold">Updated:</span>
               <p className="small">
-                <span className="fw-bold">Updated:</span> {"product.updatedAt.$date"}
+                {moment(product.updatedAt).format("L H:mm:ss")}
               </p>
+              <span className="fw-bold">Created:</span>
               <p className="small">
-                <span className="fw-bold">Created:</span> {"product.createdAt.$date"}
+                {moment(product.createdAt).format("L H:mm:ss")}
               </p>
             </div>
             <div className="card-footer d-flex flex-row justify-content-evenly">
@@ -39,7 +46,7 @@ export const UserProducts = (props) => {
               </button>
             </div>
           </div>
-        {/* ))} */}
+        ))}
       </div>
     </div>
   );
