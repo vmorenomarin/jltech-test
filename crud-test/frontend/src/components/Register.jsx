@@ -13,6 +13,7 @@ export const Register = () => {
     email: "",
     phone: "",
     password: "",
+    document: "",
   };
 
   const [customerData, setCustomerData] = useState(cInitialData);
@@ -92,6 +93,22 @@ export const Register = () => {
                       }
                       value={customerData.lastname}
                     />
+                    <label className="form-label fw-bold mt-2">Document Number:</label>
+                    <input
+                      type="number"
+                      className="form-control"
+                      id="inputDocument"
+                      required
+                      placeholder=""
+                      onChange={(e) =>
+                        setCustomerData({
+                          ...customerData,
+                          document: e.target.value,
+                        })
+                      }
+                      value={customerData.document}
+                    />
+                    
                     <label className="form-label fw-bold mt-2">E-mail:</label>
                     <input
                       type="email"

@@ -13,7 +13,7 @@ route.get(
   currentUser,
   customerCtrl.listCustomerById
 );
-route.post("/", upload.single("img"), customerCtrl.addCustomer);
+route.post("/", customerCtrl.addCustomer);
 route.post("/login", customerCtrl.login);
 route.put(
   "/:id",

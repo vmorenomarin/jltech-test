@@ -44,7 +44,7 @@ customerCtrl.listCustomerById = async (req, res) => {
 
 customerCtrl.addCustomer = async (req, res) => {
   try {
-    const { name, lastname, phone, password, email, document } = req.body;
+    const { name, lastname, document, phone, password, email} = req.body;
     /** Customer existence validation */
     const customer = await customerModel.findOne({ email });
     if (customer) {
@@ -59,8 +59,8 @@ customerCtrl.addCustomer = async (req, res) => {
       document,
       password: auth.encryptPassword(password),
     });
-    const { filename } = req.file;
-    newCustomer.setImgUrl(filename);
+    // const { filename } = req.file;
+    // newCustomer.setImgUrl(filename);
     await newCustomer.save();
     /** Returns user token. */
     const token = jsw.sign({ _id: newCustomer._id }, secret, {
