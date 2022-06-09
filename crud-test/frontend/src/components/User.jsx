@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useCallback, useEffect, useState } from "react";
 import { UserProducts } from "./UserProducts";
 import { useUser } from "../context/UserContext";
 // import Swal from "sweetalert2";
@@ -26,16 +26,7 @@ export const User = () => {
   const getUserProducts = async () => {
     try {
       const { data } = await axios.get("/products/user/" + id, options);
-      // const products = [];
-      // data.data.forEach((product) => {
-      //   console.log(product.user._id, "user:", id);
-      //   if (product.user._id === id) {
-      //     products.push(product);
-      //   }
-      // });
-      // console.log(products);
       setUserProducts(data.data);
-      console.log(userProducts);
     } catch (error) {
       if (!error.response.data.ok) {
         return console.log(error.message.data.message);
@@ -47,7 +38,6 @@ export const User = () => {
     getUserData();
     getUserProducts();
   }, []);
-
   return (
     <div
       className="container d-flex flex-column justify-content-center"
@@ -94,7 +84,7 @@ export const User = () => {
         </div>
       </div>
 
-      <UserProducts products={userProducts} />
+      <UserProducts data={[userProducts, user]} />
     </div>
   );
 };

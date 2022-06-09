@@ -64,7 +64,7 @@ export const AdminUserView = () => {
       Swal.fire({
         icon: "success",
         title: "Success updated info",
-        text: "User informationd was updated.",
+        text: "User information was updated.",
       });
     } catch (error) {
       if (!error.response.data.ok) {

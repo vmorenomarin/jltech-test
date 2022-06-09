@@ -1,25 +1,47 @@
 import React, { useState } from "react";
 import moment from "moment";
 import { Button, Form, Modal } from "react-bootstrap";
+import axios from "axios";
+import Swal from "sweetalert2";
 
 export const UserProducts = (props) => {
   const [loading, setLoading] = useState(false);
-  const [product, setProduct] = useState();
+  const [product, setProduct] = useState({});
   const [show, setShow] = useState(false);
   const handleShow = () => setShow(true);
   const handleClose = () => setShow(false);
+  const options = {
+    headers: { authorization: "Bearer " + props.data[1].token },
+  };
 
   const updateProduct = async (productToUpdate) => {
     try {
       setLoading(true);
-    } catch (error) {}
+      const { _id } = productToUpdate;
+      const { data } = await axios.put(
+        "/products/" + _id,
+        productToUpdate,
+        options
+      );
+      setLoading(false);
+      return Swal.fire({
+        icon: "succes",
+        title: "Product updated successfully",
+        text: "Product infprmation was updated.",
+      });
+    } catch (error) {
+      if (!error.response.data.ok);
+      {
+        console.log(error);
+      }
+    }
   };
 
   return (
     <div id="userProduct" className="container mt-3">
       <h1 className="display-6">My Products</h1>
       <div className="row row-cols-2 justify-content-evenly">
-        {props.products.map((product) => (
+        {props.data[0].map((product) => (
           // console.log(product),
           <div className="col-md-3 col-sm-4 m-2 p-0" key={product._id}>
             <div className="card card-product">
