@@ -7,9 +7,26 @@ import Swal from "sweetalert2";
 export const UserProducts = (props) => {
   const [loading, setLoading] = useState(false);
   const [product, setProduct] = useState({});
-  const [show, setShow] = useState(false);
-  const handleShow = () => setShow(true);
-  const handleClose = () => setShow(false);
+
+  // Define states to handle two different modal windows.
+
+  const [showModalEdit, setShowModalEdit] = useState(false);
+  const [showModalAdd, setShowModalAdd] = useState(false);
+  const handleShowModalEdit = () => setShowModalEdit(true);
+  const handleCloseModalEdit = () => setShowModalEdit(false);
+  const handleShowModalAdd = () => setShowModalAdd(true);
+  const handleCloseModalAdd = () => setShowModalAdd(false);
+
+  const initialProductState = {
+    name: "",
+    code: "",
+    price: "",
+    user: "",
+    stock: "",
+    category: "",
+    img: "",
+  };
+  const [newProduct, setNewProduct] = useState(initialProductState);
   const options = {
     headers: { authorization: "Bearer " + props.data[1].token },
   };
@@ -27,7 +44,7 @@ export const UserProducts = (props) => {
       return Swal.fire({
         icon: "succes",
         title: "Product updated successfully",
-        text: "Product infprmation was updated.",
+        text: "Product information was updated.",
       });
     } catch (error) {
       if (!error.response.data.ok);
@@ -37,9 +54,36 @@ export const UserProducts = (props) => {
     }
   };
 
+  const addProduct = async (newProduct) => {
+    try {
+      setLoading(true);
+      const { data } = await axios.post("/products", newProduct);
+      setLoading(false);
+      return Swal.fire({
+        icon: "success",
+        title: "Product added susccessfully",
+        text: `${newProduct.name} was added to your listCustomerById.`,
+      });
+    } catch (error) {
+      alert(error);
+    }
+  };
+
   return (
     <div id="userProduct" className="container mt-3">
-      <h1 className="display-6">My Products</h1>
+      <div className="d-flex column justify-content-between justify-aling-center">
+        <h1 className="display-6">My Products</h1>
+        <div>
+          <button
+            className="btn btn-success"
+            onClick={(e) => {
+              handleShowModalAdd();
+            }}
+          >
+            <i className="fa fa-add"></i> Add Product
+          </button>
+        </div>
+      </div>
       <div className="row row-cols-2 justify-content-evenly">
         {props.data[0].map((product) => (
           // console.log(product),
@@ -72,7 +116,7 @@ export const UserProducts = (props) => {
                   data-bs-placement="top"
                   title="Edit product"
                   onClick={() => {
-                    handleShow();
+                    handleShowModalEdit();
                     setProduct(product);
                   }}
                 >
@@ -90,7 +134,7 @@ export const UserProducts = (props) => {
             </div>
           </div>
         ))}
-        <Modal show={show} onHide={handleClose}>
+        <Modal show={showModalEdit} onHide={handleCloseModalEdit}>
           <Modal.Header closeButton>
             <Modal.Title>Edit product data </Modal.Title>
           </Modal.Header>
@@ -141,11 +185,94 @@ export const UserProducts = (props) => {
               <div className="d-flex justify-content-end">
                 <Button
                   variant="primary"
-                  onClick={handleClose}
+                  onClick={handleCloseModalEdit}
                   type="submit"
                   className="mt-2 "
                 >
-                  <i className="fa fa-save me-1"></i> Save Changes
+                  <i className="fa fa-save me-1"></i> Update
+                </Button>
+              </div>
+            </Form>
+          </Modal.Body>
+        </Modal>
+
+        <Modal show={showModalAdd} onHide={handleCloseModalAdd}>
+          <Modal.Header closeButton>
+            <Modal.Title>Add Product</Modal.Title>
+          </Modal.Header>
+          <Modal.Body>
+            <Form
+              onSubmit={(e) => {
+                addProduct(newProduct);
+              }}
+            >
+              <Form.Group controlId="newProductName" className="mb-2">
+                <Form.Label className="fw-bold me-2">Name:</Form.Label>
+                <Form.Control
+                  type="text"
+                  size="sm"
+                  onChange={(e) =>
+                    setNewProduct({ ...newProduct, name: e.target.value })
+                  }
+                />
+              </Form.Group>
+              <Form.Group controlId="newProductCode" className="mb-2">
+                <Form.Label className="fw-bold me-2">Code:</Form.Label>
+                <Form.Control
+                  type="text"
+                  size="sm"
+                  onChange={(e) =>
+                    setNewProduct({ ...newProduct, code: e.target.value })
+                  }
+                />
+              </Form.Group>
+              <Form.Group controlId="newProductPrice" className="mb-2">
+                <Form.Label className="fw-bold me-2">Price:</Form.Label>
+                <Form.Control
+                  type="number"
+                  size="sm"
+                  onChange={(e) =>
+                    setNewProduct({ ...newProduct, price: e.target.value })
+                  }
+                />
+              </Form.Group>
+              <Form.Group controlId="newProductStock" className="mb-2">
+                <Form.Label className="fw-bold me-2">Price:</Form.Label>
+                <Form.Control
+                  type="number"
+                  size="sm"
+                  onChange={(e) =>
+                    setNewProduct({ ...newProduct, stock: e.target.value })
+                  }
+                />
+              </Form.Group>
+              <Form.Group controlId="newProductCategory" className="mb-2">
+                <Form.Label className="fw-bold">Product Category</Form.Label>
+                <Form.Select
+                  type="text"
+                  size="sm"
+                  onChange={(e) =>
+                    setNewProduct({ ...newProduct, category: e.target.value })
+                  }
+                >
+                  <option className="text-muted">Choose a category</option>
+                  <option value="1">Confitería</option>
+                  <option value="2">Aseo y Cuidado Personal</option>
+                  <option value="3">Tecnología</option>
+                </Form.Select>
+              </Form.Group>
+              <Form.Group controlId="newProductImg" className="mb-2">
+                <Form.Label className="fw-bold">Picture Product</Form.Label>
+                <Form.Control type="file" size="sm" />
+              </Form.Group>
+              <div className="d-flex justify-content-end">
+                <Button
+                  variant="success"
+                  onClick={handleCloseModalEdit}
+                  type="submit"
+                  className="mt-2 "
+                >
+                  <i className="fa fa-plus me-1"></i> Add
                 </Button>
               </div>
             </Form>
