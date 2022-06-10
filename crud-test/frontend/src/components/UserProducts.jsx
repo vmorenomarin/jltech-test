@@ -65,7 +65,7 @@ export const UserProducts = (props) => {
         text: `${newProduct.name} was added to your listCustomerById.`,
       });
     } catch (error) {
-      alert(error);
+      console.log(error);
     }
   };
 
