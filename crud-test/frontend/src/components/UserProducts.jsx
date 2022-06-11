@@ -5,8 +5,17 @@ import axios from "axios";
 import Swal from "sweetalert2";
 
 export const UserProducts = (props) => {
+  const initialProductData = {
+    name: "",
+    code: "",
+    price: "",
+    user: "",
+    stock: "",
+    category: "",
+    img: "",
+  };
+  const [productData, setProductData] = useState({ initialProductData });
   const [loading, setLoading] = useState(false);
-  const [product, setProduct] = useState({});
 
   // Define states to handle two different modal windows.
 
@@ -17,18 +26,30 @@ export const UserProducts = (props) => {
   const handleShowModalAdd = () => setShowModalAdd(true);
   const handleCloseModalAdd = () => setShowModalAdd(false);
 
-  const initialProductState = {
-    name: "",
-    code: "",
-    price: "",
-    user: "",
-    stock: "",
-    category: "",
-    img: "",
-  };
-  const [newProduct, setNewProduct] = useState(initialProductState);
   const options = {
     headers: { authorization: "Bearer " + props.data[1].token },
+  };
+
+  const imgValidator = (e) => {
+    if (e.target.files && e.target.files[0]) {
+      console.log(e.target.files[0]);
+      const img = e.target.files[0];
+      // Next regular expressions, means:
+      // Search pattern that begins with . (\.), that has any of this extentions (jpg or jpeg or JPG  or JPEG  or png  or PNG or svg or SVG) to the end of line ($) and ignore case (i).
+      if (!/\.(jpg|jpeg|JPG|JPEG|png|PNG|svg|SVG)$/.test(img.name)) {
+        Swal.fire({
+          icon: "error",
+          title: "Invalid format",
+          text: "Invalid file format for image that try upload.",
+        });
+        e.target.valeue = "";
+      } else {
+        setProductData({
+          ...productData,
+          img: img,
+        });
+      }
+    }
   };
 
   const updateProduct = async (productToUpdate) => {
@@ -47,17 +68,26 @@ export const UserProducts = (props) => {
         text: "Product information was updated.",
       });
     } catch (error) {
-      if (!error.response.data.ok);
-      {
-        console.log(error);
-      }
+      // if (!error.response.data.ok);
+      // {
+      console.log(error);
+      // }
     }
   };
 
   const addProduct = async (newProduct) => {
+    const newProductToAdd = {
+      name: newProduct.name,
+      code: newProduct.code,
+      price: newProduct.price,
+      user: newProduct.user,
+      stock: newProduct.stock,
+      category: newProduct.category,
+      img: newProduct.img,
+    };
     try {
       setLoading(true);
-      const { data } = await axios.post("/products", newProduct);
+      const { data } = await axios.post("/products", newProductToAdd);
       setLoading(false);
       return Swal.fire({
         icon: "success",
@@ -117,7 +147,7 @@ export const UserProducts = (props) => {
                   title="Edit product"
                   onClick={() => {
                     handleShowModalEdit();
-                    setProduct(product);
+                    setProductData(product);
                   }}
                 >
                   <i className="fa fa-pen"></i>
@@ -139,14 +169,14 @@ export const UserProducts = (props) => {
             <Modal.Title>Edit product data </Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Form onSubmit={(e) => updateProduct(product)}>
+            <Form onSubmit={(e) => updateProduct(productData)}>
               <Form.Group controlId="productName">
                 <Form.Label className="fw-bold">Product Name</Form.Label>
                 <Form.Control
                   type="text"
-                  value={product.name}
+                  value={productData.name}
                   onChange={(e) =>
-                    setProduct({ ...product, name: e.target.value })
+                    setProductData({ ...productData, name: e.target.value })
                   }
                 />
               </Form.Group>
@@ -154,9 +184,9 @@ export const UserProducts = (props) => {
                 <Form.Label className="fw-bold">Product Price</Form.Label>
                 <Form.Control
                   type="number"
-                  value={product.price}
+                  value={productData.price}
                   onChange={(e) =>
-                    setProduct({ ...product, price: e.target.value })
+                    setProductData({ ...productData, price: e.target.value })
                   }
                 />
               </Form.Group>
@@ -164,9 +194,9 @@ export const UserProducts = (props) => {
                 <Form.Label className="fw-bold">Product Category</Form.Label>
                 <Form.Select
                   type="text"
-                  value={product.category}
+                  value={productData.category}
                   onChange={(e) =>
-                    setProduct({ ...product, category: e.target.value })
+                    setProductData({ ...productData, category: e.target.value })
                   }
                 >
                   <option>Confitería</option>
@@ -179,7 +209,7 @@ export const UserProducts = (props) => {
                 <Form.Control
                   disabled
                   type="number"
-                  value={product.stock}
+                  value={productData.stock}
                 ></Form.Control>
               </Form.Group>
               <div className="d-flex justify-content-end">
@@ -203,56 +233,61 @@ export const UserProducts = (props) => {
           <Modal.Body>
             <Form
               onSubmit={(e) => {
-                addProduct(newProduct);
+                addProduct(productData);
               }}
             >
               <Form.Group controlId="newProductName" className="mb-2">
                 <Form.Label className="fw-bold me-2">Name:</Form.Label>
                 <Form.Control
+                  required
                   type="text"
                   size="sm"
                   onChange={(e) =>
-                    setNewProduct({ ...newProduct, name: e.target.value })
+                    setProductData({ ...productData, name: e.target.value })
                   }
                 />
               </Form.Group>
               <Form.Group controlId="newProductCode" className="mb-2">
                 <Form.Label className="fw-bold me-2">Code:</Form.Label>
                 <Form.Control
+                  required
                   type="text"
                   size="sm"
                   onChange={(e) =>
-                    setNewProduct({ ...newProduct, code: e.target.value })
+                    setProductData({ ...productData, code: e.target.value })
                   }
                 />
               </Form.Group>
               <Form.Group controlId="newProductPrice" className="mb-2">
                 <Form.Label className="fw-bold me-2">Price:</Form.Label>
                 <Form.Control
+                  required
                   type="number"
                   size="sm"
                   onChange={(e) =>
-                    setNewProduct({ ...newProduct, price: e.target.value })
+                    setProductData({ ...productData, price: e.target.value })
                   }
                 />
               </Form.Group>
               <Form.Group controlId="newProductStock" className="mb-2">
-                <Form.Label className="fw-bold me-2">Price:</Form.Label>
+                <Form.Label className="fw-bold me-2">Stock:</Form.Label>
                 <Form.Control
+                  required
                   type="number"
                   size="sm"
                   onChange={(e) =>
-                    setNewProduct({ ...newProduct, stock: e.target.value })
+                    setProductData({ ...productData, stock: e.target.value })
                   }
                 />
               </Form.Group>
               <Form.Group controlId="newProductCategory" className="mb-2">
                 <Form.Label className="fw-bold">Product Category</Form.Label>
                 <Form.Select
+                  required
                   type="text"
                   size="sm"
                   onChange={(e) =>
-                    setNewProduct({ ...newProduct, category: e.target.value })
+                    setProductData({ ...productData, category: e.target.value })
                   }
                 >
                   <option className="text-muted">Choose a category</option>
@@ -263,12 +298,17 @@ export const UserProducts = (props) => {
               </Form.Group>
               <Form.Group controlId="newProductImg" className="mb-2">
                 <Form.Label className="fw-bold">Picture Product</Form.Label>
-                <Form.Control type="file" size="sm" />
+                <Form.Control
+                  required
+                  type="file"
+                  size="sm"
+                  onChange={(e) => imgValidator(e)}
+                />
               </Form.Group>
               <div className="d-flex justify-content-end">
                 <Button
                   variant="success"
-                  onClick={handleCloseModalEdit}
+                  onClick={handleCloseModalAdd}
                   type="submit"
                   className="mt-2 "
                 >
