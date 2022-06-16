@@ -5,7 +5,7 @@ const { v4: uuidv4 } = require("uuid"); // Random UUID generator
 
 const storage = multer.diskStorage({
   destination: path.join(__dirname, `../storage/imgs/`),
-  filename: (req, file, cb) => {
+  filename: function(req, file, cb){
     cb(null, uuidv4() + path.extname(file.originalname.toLocaleLowerCase()));
   },
 });
@@ -13,13 +13,13 @@ const storage = multer.diskStorage({
 const upload = multer({
   storage: storage,
   fileFilter: (req, file, cb) => {
-    const fileTypes = /jpg|jpeg|JPG|JPEG|PNG|png|svg|SVG/;
+    const fileTypes = /jpg|jpeg|JPG|JPEG|PNG|png|svg|SVG|webp|WEBP/;
     const mimetype = fileTypes.test(file.mimetype);
     const extname = fileTypes.test(path.extname(file.originalname));
     if (mimetype && extname) {
       return cb(null, true);
     }
-    cb("Error: file must has jpg|jpeg|JPG|JPEG|PNG|png|svg|SVG extension.");
+    cb("Error: file must has jpg|jpeg|JPG|JPEG|PNG|png|svg|SVG|webp|WEBP extension.");
   },
 });
 

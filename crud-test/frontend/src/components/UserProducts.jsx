@@ -29,20 +29,20 @@ export const UserProducts = (props) => {
   const options = {
     headers: { authorization: "Bearer " + props.data[1].token },
   };
-
   const imgValidator = (e) => {
     if (e.target.files && e.target.files[0]) {
       console.log(e.target.files[0]);
       const img = e.target.files[0];
       // Next regular expressions, means:
       // Search pattern that begins with . (\.), that has any of this extentions (jpg or jpeg or JPG  or JPEG  or png  or PNG or svg or SVG) to the end of line ($) and ignore case (i).
-      if (!/\.(jpg|jpeg|JPG|JPEG|png|PNG|svg|SVG)$/.test(img.name)) {
+      if (!/\.(jpg|jpeg|JPG|JPEG|png|PNG|svg|SVG|webp|WEBP)$/i.test(img.name)) {
         Swal.fire({
           icon: "error",
           title: "Invalid format",
           text: "Invalid file format for image that try upload.",
+          timer: 1500,
         });
-        e.target.valeue = "";
+        e.target.value = "";
       } else {
         setProductData({
           ...productData,
@@ -61,17 +61,26 @@ export const UserProducts = (props) => {
         productToUpdate,
         options
       );
-      setLoading(false);
-      return Swal.fire({
-        icon: "succes",
-        title: "Product updated successfully",
-        text: "Product information was updated.",
-      });
+      // setLoading(false);
+      if (data.ok) {
+        return Swal.fire({
+          icon: "succes",
+          title: "Product updated successfully",
+          text: "Product information was updated.",
+          // showConfirmButton: false,
+        });
+      }
+      // Navigate("/user/" + props.data[1].id);
     } catch (error) {
-      // if (!error.response.data.ok);
-      // {
-      console.log(error);
-      // }
+      if (!error.response.data.ok);
+      {
+        return Swal.fire({
+          icon: "error",
+          title: "Product update not successfully",
+          text: "Product information does not was updated.",
+          timer: 1500,
+        });
+      }
     }
   };
 
@@ -80,22 +89,67 @@ export const UserProducts = (props) => {
       name: newProduct.name,
       code: newProduct.code,
       price: newProduct.price,
-      user: newProduct.user,
+      user: props.data[1].id,
       stock: newProduct.stock,
       category: newProduct.category,
       img: newProduct.img,
     };
     try {
       setLoading(true);
-      const { data } = await axios.post("/products", newProductToAdd);
+      const { data } = await axios.post("/products/", newProductToAdd, options);
       setLoading(false);
-      return Swal.fire({
-        icon: "success",
-        title: "Product added susccessfully",
-        text: `${newProduct.name} was added to your listCustomerById.`,
-      });
+      if (data.ok) {
+        return Swal.fire({
+          icon: "succces",
+          title: "Are you sure?",
+          text: data.message,
+          timer: 1500,
+        });
+      }
     } catch (error) {
-      console.log(error);
+      if (!error.response.data.ok);
+      {
+        return Swal.fire({
+          icon: "error",
+          title: "Cannot delete product.",
+          text: error.response.data.message,
+          timer: 1500,
+          showConfirmButton: false,
+        });
+      }
+    }
+  };
+
+  const deleteProduct = async (productToDeleteId) => {
+    const {_id} = productToDeleteId;
+    try {
+      setLoading(true);
+      const { data } = await axios.delete("products/" + _id, options);
+      if (data.ok) {
+        return Swal.fire({
+          icon: "warning",
+          title: "Are you sure?",
+          text: "You won't revert this!",
+          showCancelButton: true,
+          confirmButtonColor: "#dc3545",
+          confirmButtonText: "Yes, delete it!",
+        }).then((result) => {
+          if (result.isConfirmed) {
+            Swal.fire(data.message);
+          }
+        });
+      }
+    } catch (error) {
+      if (!error.response.data.ok);
+      {
+        return Swal.fire({
+          icon: "error",
+          title: "Cannot delete product.",
+          text: error.response.data.message,
+          timer: 1500,
+          showConfirmButton: false,
+        });
+      }
     }
   };
 
@@ -157,6 +211,7 @@ export const UserProducts = (props) => {
                   data-bs-toggle="tooltip"
                   data-bs-placement="top"
                   title="Delete product"
+                  onClick={(e)=>deleteProduct(product)}
                 >
                   <i className="fa fa-trash"></i>
                 </button>
@@ -231,91 +286,91 @@ export const UserProducts = (props) => {
             <Modal.Title>Add Product</Modal.Title>
           </Modal.Header>
           <Modal.Body>
-            <Form
+            <form
               onSubmit={(e) => {
                 addProduct(productData);
               }}
             >
-              <Form.Group controlId="newProductName" className="mb-2">
-                <Form.Label className="fw-bold me-2">Name:</Form.Label>
-                <Form.Control
+              <div className="mb-1">
+                <label className="form-label">Name:</label>
+                <input
                   required
                   type="text"
-                  size="sm"
+                  className="form-control form-control-sm"
+                  id="newProductName"
                   onChange={(e) =>
                     setProductData({ ...productData, name: e.target.value })
                   }
                 />
-              </Form.Group>
-              <Form.Group controlId="newProductCode" className="mb-2">
-                <Form.Label className="fw-bold me-2">Code:</Form.Label>
-                <Form.Control
-                  required
+              </div>
+              <div className="mb-1">
+                <label className="form-label">Product Code:</label>
+                <input
                   type="text"
-                  size="sm"
+                  className="form-control form-control-sm"
+                  id="newProductCode"
                   onChange={(e) =>
                     setProductData({ ...productData, code: e.target.value })
                   }
                 />
-              </Form.Group>
-              <Form.Group controlId="newProductPrice" className="mb-2">
-                <Form.Label className="fw-bold me-2">Price:</Form.Label>
-                <Form.Control
-                  required
+              </div>
+              <div className="mb-1">
+                <label className="form-label">Price:</label>
+                <input
                   type="number"
-                  size="sm"
+                  className="form-control form-control-sm"
+                  id="newProductPrice"
                   onChange={(e) =>
                     setProductData({ ...productData, price: e.target.value })
                   }
                 />
-              </Form.Group>
-              <Form.Group controlId="newProductStock" className="mb-2">
-                <Form.Label className="fw-bold me-2">Stock:</Form.Label>
-                <Form.Control
-                  required
+              </div>
+              <div className="mb-1">
+                <label className="form-label">Stock:</label>
+                <input
                   type="number"
-                  size="sm"
+                  className="form-control form-control-sm"
+                  id="newProductStock"
                   onChange={(e) =>
                     setProductData({ ...productData, stock: e.target.value })
                   }
                 />
-              </Form.Group>
-              <Form.Group controlId="newProductCategory" className="mb-2">
-                <Form.Label className="fw-bold">Product Category</Form.Label>
-                <Form.Select
+              </div>
+              <div className="mb-1">
+                <label className="form-label">Category:</label>
+                <select
+                  className="form-select form-select-sm"
                   required
-                  type="text"
-                  size="sm"
                   onChange={(e) =>
                     setProductData({ ...productData, category: e.target.value })
                   }
                 >
-                  <option className="text-muted">Choose a category</option>
-                  <option value="1">Confitería</option>
-                  <option value="2">Aseo y Cuidado Personal</option>
-                  <option value="3">Tecnología</option>
-                </Form.Select>
-              </Form.Group>
-              <Form.Group controlId="newProductImg" className="mb-2">
-                <Form.Label className="fw-bold">Picture Product</Form.Label>
-                <Form.Control
-                  required
+                  <option defaultValue>Open this select menu</option>
+                  <option>Confitería</option>
+                  <option>Aseo y Cuidado Personal</option>
+                  <option>Tecnología</option>
+                </select>
+              </div>
+              <div className="mb-3">
+                <label className="form-label">Product picture</label>
+                <input
+                  className="form-control form-control-sm"
+                  name="img"
+                  id="newProductCategory"
                   type="file"
-                  size="sm"
                   onChange={(e) => imgValidator(e)}
                 />
-              </Form.Group>
+              </div>
               <div className="d-flex justify-content-end">
-                <Button
-                  variant="success"
-                  onClick={handleCloseModalAdd}
+                <button
                   type="submit"
-                  className="mt-2 "
+                  className="btn btn-success"
+                  onClick={handleCloseModalAdd}
                 >
                   <i className="fa fa-plus me-1"></i> Add
-                </Button>
+                </button>
               </div>
-            </Form>
+            </form>
           </Modal.Body>
         </Modal>
       </div>

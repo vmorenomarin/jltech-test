@@ -29,15 +29,18 @@ export const User = () => {
       setUserProducts(data.data);
     } catch (error) {
       if (!error.response.data.ok) {
-        return console.log(error.message.data.message);
+        return console.log(error.response.data.message);
       }
     }
   };
+  // getUserData();
+  // getUserProducts();
 
   useEffect(() => {
     getUserData();
     getUserProducts();
   }, []);
+
   return (
     <div
       className="container d-flex flex-column justify-content-center"
