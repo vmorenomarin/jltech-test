@@ -12,7 +12,7 @@ export const User = () => {
   const { user } = useUser();
   const options = { headers: { authorization: "Bearer " + user.token } };
 
-  const getUserData = async () => {
+  const getUserData = async (id) => {
     try {
       const { data } = await axios.get("/user/u/" + id, options);
       setCurrentUser(data.data);
@@ -37,7 +37,7 @@ export const User = () => {
   // getUserProducts();
 
   useEffect(() => {
-    getUserData();
+    getUserData(id);
     getUserProducts();
   }, []);
 

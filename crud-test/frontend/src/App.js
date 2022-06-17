@@ -1,3 +1,4 @@
+import React from "react";
 import {
   BrowserRouter as Router,
   Route,
@@ -14,6 +15,7 @@ import { User } from "./components/User";
 import { useUser } from "./context/UserContext";
 import { AdminUsersView } from "./components/admin/AdminUsersView";
 import { AdminUserView } from "./components/admin/AdminUserView";
+import { UpdateUserInfo } from "./components/UpdateUserInfo.jsx.bk";
 
 function App() {
   const { user } = useUser();
@@ -21,7 +23,7 @@ function App() {
     if (user.login) {
       return child;
     }
-    <Navigate to="/login" />;
+    return <Navigate to="/login" />;
   };
 
   // const Public = (props) => {
@@ -37,6 +39,7 @@ function App() {
         <Route path="/products/" element={<Products />} />
         <Route path="/product/:id/" element={<Product />} />
         <Route path="/user/:id" element={<User />} />
+        {/* <Route path="user/:id/update" element={<UpdateUserInfo user={user}/>} /> */}
         <Route
           path="/admin/"
           element={user.role === "Admin" ? Private(<Admin />) : <Products />}

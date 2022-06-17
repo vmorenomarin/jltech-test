@@ -1,9 +1,7 @@
 import React, { useState } from "react";
 import moment from "moment";
-import { Button, Form, Modal } from "react-bootstrap";
 import axios from "axios";
 import Swal from "sweetalert2";
-import { UpdateProduct } from "./UpdateProduct";
 
 export const UserProducts = (props) => {
   const initialProductData = {
@@ -53,38 +51,38 @@ export const UserProducts = (props) => {
     }
   };
 
-  // const updateProduct = async (productToUpdate) => {
-  //   try {
-  //     setLoading(true);
-  //     const { _id } = productToUpdate;
-  //     const { data } = await axios.put(
-  //       "/products/" + _id,
-  //       productToUpdate,
-  //       options
-  //     );
-  //     // setLoading(false);
-  //     if (data.ok) {
-  //       return Swal.fire({
-  //         icon: "succes",
-  //         title: "Product updated successfully",
-  //         text: "Product information was updated.",
-  //         showConfirmButton: true,
-  //         timer: 1500,
-  //       });
-  //     }
-  //     // Navigate("/user/" + props.data[1].id);
-  //   } catch (error) {
-  //     if (!error.response.data.ok);
-  //     {
-  //       return Swal.fire({
-  //         icon: "error",
-  //         title: "Product update not successfully",
-  //         text: "Product information does not was updated.",
-  //         timer: 1500,
-  //       });
-  //     }
-  //   }
-  // };
+  const updateProduct = async (productToUpdate) => {
+    try {
+      setLoading(true);
+      const { _id } = productToUpdate;
+      const { data } = await axios.put(
+        "/products/" + _id,
+        productToUpdate,
+        options
+      );
+      // setLoading(false);
+      if (data.ok) {
+        return Swal.fire({
+          icon: "succes",
+          title: "Product updated successfully",
+          text: "Product information was updated.",
+          showConfirmButton: true,
+          timer: 1500,
+        });
+      }
+      // Navigate("/user/" + props.data[1].id);
+    } catch (error) {
+      if (!error.response.data.ok);
+      {
+        return Swal.fire({
+          icon: "error",
+          title: "Product update not successfully",
+          text: "Product information does not was updated.",
+          timer: 1500,
+        });
+      }
+    }
+  };
 
   const addProduct = async (newProduct) => {
     const newProductToAdd = {
@@ -158,9 +156,8 @@ export const UserProducts = (props) => {
         <div>
           <button
             className="btn btn-success"
-            onClick={(e) => {
-              handleShowModalAdd();
-            }}
+            data-bs-toggle="modal"
+            data-bs-target="#addProductModal"
           >
             <i className="fa fa-add"></i> Add Product
           </button>
@@ -195,8 +192,7 @@ export const UserProducts = (props) => {
                   type="button"
                   className="btn btn-sm btn-primary"
                   data-bs-toggle="modal"
-                  data-bs-target="#exampleModal"
-                  // data-bs-placement="top"
+                  data-bs-target="#updateProductModal"
                   title="Edit product"
                   onClick={() => {
                     // handleShowModalEdit();
@@ -219,162 +215,226 @@ export const UserProducts = (props) => {
           </div>
         ))}
 
-        {/* <Modal show={showModalEdit} onHide={handleCloseModalEdit}>
-          <Modal.Header closeButton>
-            <Modal.Title>Edit product data </Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <Form onSubmit={(e) => updateProduct(productData)}>
-              <Form.Group controlId="productName">
-                <Form.Label className="fw-bold">Product Name</Form.Label>
-                <Form.Control
-                  type="text"
-                  value={productData.name}
-                  onChange={(e) =>
-                    setProductData({ ...productData, name: e.target.value })
-                  }
-                />
-              </Form.Group>
-              <Form.Group controlId="productPrice">
-                <Form.Label className="fw-bold">Product Price</Form.Label>
-                <Form.Control
-                  type="number"
-                  value={productData.price}
-                  onChange={(e) =>
-                    setProductData({ ...productData, price: e.target.value })
-                  }
-                />
-              </Form.Group>
-              <Form.Group controlId="productCategory">
-                <Form.Label className="fw-bold">Product Category</Form.Label>
-                <Form.Select
-                  type="text"
-                  value={productData.category}
-                  onChange={(e) =>
-                    setProductData({ ...productData, category: e.target.value })
-                  }
-                >
-                  <option>Confitería</option>
-                  <option>Aseo y Cuidado Personal</option>
-                  <option>Tecnología</option>
-                </Form.Select>
-              </Form.Group>
-              <Form.Group controlId="productStock">
-                <Form.Label className="fw-bold">Product Category</Form.Label>
-                <Form.Control
-                  disabled
-                  type="number"
-                  value={productData.stock}
-                ></Form.Control>
-              </Form.Group>
-              <div className="d-flex justify-content-end">
-                <Button
-                  variant="primary"
-                  onClick={handleCloseModalEdit}
-                  type="submit"
-                  className="mt-2 "
-                >
-                  <i className="fa fa-save me-1"></i> Update
-                </Button>
-              </div>
-            </Form>
-          </Modal.Body>
-        </Modal> */}
-
-        <Modal show={showModalAdd} onHide={handleCloseModalAdd}>
-          <Modal.Header closeButton>
-            <Modal.Title>Add Product</Modal.Title>
-          </Modal.Header>
-          <Modal.Body>
-            <form
-              onSubmit={(e) => {
-                addProduct(productData);
-              }}
-            >
-              <div className="mb-1">
-                <label className="form-label">Name:</label>
-                <input
-                  required
-                  type="text"
-                  className="form-control form-control-sm"
-                  id="newProductName"
-                  onChange={(e) =>
-                    setProductData({ ...productData, name: e.target.value })
-                  }
-                />
-              </div>
-              <div className="mb-1">
-                <label className="form-label">Product Code:</label>
-                <input
-                  type="text"
-                  className="form-control form-control-sm"
-                  id="newProductCode"
-                  onChange={(e) =>
-                    setProductData({ ...productData, code: e.target.value })
-                  }
-                />
-              </div>
-              <div className="mb-1">
-                <label className="form-label">Price:</label>
-                <input
-                  type="number"
-                  className="form-control form-control-sm"
-                  id="newProductPrice"
-                  onChange={(e) =>
-                    setProductData({ ...productData, price: e.target.value })
-                  }
-                />
-              </div>
-              <div className="mb-1">
-                <label className="form-label">Stock:</label>
-                <input
-                  type="number"
-                  className="form-control form-control-sm"
-                  id="newProductStock"
-                  onChange={(e) =>
-                    setProductData({ ...productData, stock: e.target.value })
-                  }
-                />
-              </div>
-              <div className="mb-1">
-                <label className="form-label">Category:</label>
-                <select
-                  className="form-select form-select-sm"
-                  required
-                  onChange={(e) =>
-                    setProductData({ ...productData, category: e.target.value })
-                  }
-                >
-                  <option defaultValue>Open this select menu</option>
-                  <option>Confitería</option>
-                  <option>Aseo y Cuidado Personal</option>
-                  <option>Tecnología</option>
-                </select>
-              </div>
-              <div className="mb-3">
-                <label className="form-label">Product picture</label>
-                <input
-                  className="form-control form-control-sm"
-                  name="img"
-                  id="newProductCategory"
-                  type="file"
-                  onChange={(e) => imgValidator(e)}
-                />
-              </div>
-              <div className="d-flex justify-content-end">
+        <div className="modal" id="updateProductModal" tabIndex={2}>
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Edit product data</h5>
                 <button
-                  type="submit"
-                  className="btn btn-success"
-                  onClick={handleCloseModalAdd}
-                >
-                  <i className="fa fa-plus me-1"></i> Add
-                </button>
+                  className="btn-close"
+                  type="close"
+                  data-bs-dismiss="modal"
+                ></button>
               </div>
-            </form>
-          </Modal.Body>
-        </Modal>
-        <div className="moda fade" id="exampleModal">
-          {/* <UpdateProduct product={[productData, options]} /> */}
+              <div className="modal-body">
+                <form
+                  onSubmit={(e) => {
+                    updateProduct(productData);
+                  }}
+                >
+                  <div className="mb-1">
+                    <label htmlFor="productName" className="form-label">
+                      Name:
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      className="form-control form-control-sm"
+                      id="productName"
+                      value={productData.name}
+                      onChage={(e) =>
+                        setProductData({ ...productData, name: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div className="mb-1">
+                    <label htmlFor="productCode" className="form-label">
+                      Code
+                    </label>
+                    <input
+                      type="text"
+                      required
+                      className="form-control form-contol-sm"
+                      id="productCode"
+                      value={productData.code}
+                      onChange={(e) =>
+                        setProductData({
+                          ...productData,
+                          code: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                  <div className="mb-1">
+                    <label htmlFor="productPrice" className="form-label">
+                      Price
+                    </label>
+                    <input
+                      type="number"
+                      id="prouctPrice"
+                      required
+                      className="form-control form-control-sm"
+                      value={productData.price}
+                      onChange={(e) =>
+                        setProductData({
+                          ...productData,
+                          price: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                  <div className="mb-1">
+                    <label htmlFor="productStock" className="form-label">
+                      Stock
+                    </label>
+                    <input
+                      type="number"
+                      id="productPrice"
+                      className="form-control form-control-sm"
+                      value={productData.stock}
+                      disabled
+                    />
+                  </div>
+                  <div className="mb-1">
+                    <label htmlFor="productCategory" className="form-label">
+                      Category
+                    </label>
+                    <select
+                      id="productCategory"
+                      required
+                      className="form-select form-select-sm"
+                      type="text"
+                    >
+                      <option defaultValue>Click and select a categoy</option>
+                      <option>Confitería</option>
+                      <option>Aseo y Cuidado Personal</option>
+                      <option>Tecnología</option>
+                    </select>
+                  </div>
+                  <div className="d-flex justify-content-end">
+                    <button
+                      className="btn btn-success"
+                      type="submit"
+                      data-bs-dismiss="modal"
+                    >
+                      <i className="fa fa-save"></i> Update product
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="modal" id="addProductModal" tabIndex={2}>
+          <div className="modal-dialog">
+            <div className="modal-content">
+              <div className="modal-header">
+                <h5 className="modal-title">Add Product</h5>
+                <button
+                  className="btn-close"
+                  type="close"
+                  data-bs-dismiss="modal"
+                ></button>
+              </div>
+              <div className="modal-body">
+                <form
+                  onSubmit={(e) => {
+                    addProduct(productData);
+                  }}
+                >
+                  <div className="mb-1">
+                    <label className="form-label">Name:</label>
+                    <input
+                      required
+                      type="text"
+                      className="form-control form-control-sm"
+                      id="newProductName"
+                      onChange={(e) =>
+                        setProductData({ ...productData, name: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div className="mb-1">
+                    <label className="form-label">Product Code:</label>
+                    <input
+                      type="text"
+                      className="form-control form-control-sm"
+                      id="newProductCode"
+                      onChange={(e) =>
+                        setProductData({ ...productData, code: e.target.value })
+                      }
+                    />
+                  </div>
+                  <div className="mb-1">
+                    <label className="form-label">Price:</label>
+                    <input
+                      type="number"
+                      className="form-control form-control-sm"
+                      id="newProductPrice"
+                      onChange={(e) =>
+                        setProductData({
+                          ...productData,
+                          price: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                  <div className="mb-1">
+                    <label className="form-label">Stock:</label>
+                    <input
+                      type="number"
+                      className="form-control form-control-sm"
+                      id="newProductStock"
+                      onChange={(e) =>
+                        setProductData({
+                          ...productData,
+                          stock: e.target.value,
+                        })
+                      }
+                    />
+                  </div>
+                  <div className="mb-1">
+                    <label className="form-label">Category:</label>
+                    <select
+                      className="form-select form-select-sm"
+                      required
+                      onChange={(e) =>
+                        setProductData({
+                          ...productData,
+                          category: e.target.value,
+                        })
+                      }
+                    >
+                      <option defaultValue>Open this select menu</option>
+                      <option>Confitería</option>
+                      <option>Aseo y Cuidado Personal</option>
+                      <option>Tecnología</option>
+                    </select>
+                  </div>
+                  <div className="mb-3">
+                    <label className="form-label">Product picture</label>
+                    <input
+                      className="form-control form-control-sm"
+                      name="img"
+                      id="newProductCategory"
+                      type="file"
+                      onChange={(e) => imgValidator(e)}
+                    />
+                  </div>
+                  <div className="d-flex justify-content-end">
+                    <button
+                      type="submit"
+                      className="btn btn-success"
+                      data-bs-dismiss="modal"
+                    >
+                      <i className="fa fa-plus me-1"></i> Add
+                    </button>
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
         </div>
       </div>
     </div>
