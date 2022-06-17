@@ -5,9 +5,9 @@ const jsw = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const auth = require("../helpers/auth.helper");
 const { deleteImg } = require("../helpers/deleteImageCtrl.helper");
+require("dotenv").config(); // Next line will be delete. This is for test purposes.
 
-// Next line will be delete. This is for test purposes.
-const secret = "Antaeus";
+const secret = process.env.SECRET;
 
 customerCtrl.listCustomers = async (req, res) => {
   /** Returns all customers in database. This method is available only for admin users */
@@ -21,7 +21,7 @@ customerCtrl.listCustomers = async (req, res) => {
 
 customerCtrl.listCustomerById = async (req, res) => {
   try {
-    const {id} = req.params;
+    const { id } = req.params;
     const customer = await customerModel.aggregate([
       {
         $lookup: {
