@@ -61,3 +61,10 @@ palette color:
 #243e63;
 #F7FAFC;
 */
+
+.swall-overlay {
+  z-index: 10005;
+}
+.swal-modal {
+   z-index: 10005;
+}

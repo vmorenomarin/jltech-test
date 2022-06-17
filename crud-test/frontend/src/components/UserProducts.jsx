@@ -3,6 +3,7 @@ import moment from "moment";
 import { Button, Form, Modal } from "react-bootstrap";
 import axios from "axios";
 import Swal from "sweetalert2";
+import { UpdateProduct } from "./UpdateProduct";
 
 export const UserProducts = (props) => {
   const initialProductData = {
@@ -52,37 +53,38 @@ export const UserProducts = (props) => {
     }
   };
 
-  const updateProduct = async (productToUpdate) => {
-    try {
-      setLoading(true);
-      const { _id } = productToUpdate;
-      const { data } = await axios.put(
-        "/products/" + _id,
-        productToUpdate,
-        options
-      );
-      // setLoading(false);
-      if (data.ok) {
-        return Swal.fire({
-          icon: "succes",
-          title: "Product updated successfully",
-          text: "Product information was updated.",
-          // showConfirmButton: false,
-        });
-      }
-      // Navigate("/user/" + props.data[1].id);
-    } catch (error) {
-      if (!error.response.data.ok);
-      {
-        return Swal.fire({
-          icon: "error",
-          title: "Product update not successfully",
-          text: "Product information does not was updated.",
-          timer: 1500,
-        });
-      }
-    }
-  };
+  // const updateProduct = async (productToUpdate) => {
+  //   try {
+  //     setLoading(true);
+  //     const { _id } = productToUpdate;
+  //     const { data } = await axios.put(
+  //       "/products/" + _id,
+  //       productToUpdate,
+  //       options
+  //     );
+  //     // setLoading(false);
+  //     if (data.ok) {
+  //       return Swal.fire({
+  //         icon: "succes",
+  //         title: "Product updated successfully",
+  //         text: "Product information was updated.",
+  //         showConfirmButton: true,
+  //         timer: 1500,
+  //       });
+  //     }
+  //     // Navigate("/user/" + props.data[1].id);
+  //   } catch (error) {
+  //     if (!error.response.data.ok);
+  //     {
+  //       return Swal.fire({
+  //         icon: "error",
+  //         title: "Product update not successfully",
+  //         text: "Product information does not was updated.",
+  //         timer: 1500,
+  //       });
+  //     }
+  //   }
+  // };
 
   const addProduct = async (newProduct) => {
     const newProductToAdd = {
@@ -108,20 +110,18 @@ export const UserProducts = (props) => {
       }
     } catch (error) {
       if (!error.response.data.ok);
-      {
-        return Swal.fire({
-          icon: "error",
-          title: "Cannot delete product.",
-          text: error.response.data.message,
-          timer: 1500,
-          showConfirmButton: false,
-        });
-      }
+      return Swal.fire({
+        icon: "error",
+        title: "Cannot delete product.",
+        text: error.response.data.message,
+        timer: 1500,
+        showConfirmButton: false,
+      });
     }
   };
 
   const deleteProduct = async (productToDeleteId) => {
-    const {_id} = productToDeleteId;
+    const { _id } = productToDeleteId;
     try {
       setLoading(true);
       const { data } = await axios.delete("products/" + _id, options);
@@ -141,15 +141,13 @@ export const UserProducts = (props) => {
       }
     } catch (error) {
       if (!error.response.data.ok);
-      {
-        return Swal.fire({
-          icon: "error",
-          title: "Cannot delete product.",
-          text: error.response.data.message,
-          timer: 1500,
-          showConfirmButton: false,
-        });
-      }
+      return Swal.fire({
+        icon: "error",
+        title: "Cannot delete product.",
+        text: error.response.data.message,
+        timer: 1500,
+        showConfirmButton: false,
+      });
     }
   };
 
@@ -196,11 +194,12 @@ export const UserProducts = (props) => {
                 <button
                   type="button"
                   className="btn btn-sm btn-primary"
-                  data-bs-toggle="tooltip"
-                  data-bs-placement="top"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal"
+                  // data-bs-placement="top"
                   title="Edit product"
                   onClick={() => {
-                    handleShowModalEdit();
+                    // handleShowModalEdit();
                     setProductData(product);
                   }}
                 >
@@ -211,7 +210,7 @@ export const UserProducts = (props) => {
                   data-bs-toggle="tooltip"
                   data-bs-placement="top"
                   title="Delete product"
-                  onClick={(e)=>deleteProduct(product)}
+                  onClick={(e) => deleteProduct(product)}
                 >
                   <i className="fa fa-trash"></i>
                 </button>
@@ -219,7 +218,8 @@ export const UserProducts = (props) => {
             </div>
           </div>
         ))}
-        <Modal show={showModalEdit} onHide={handleCloseModalEdit}>
+
+        {/* <Modal show={showModalEdit} onHide={handleCloseModalEdit}>
           <Modal.Header closeButton>
             <Modal.Title>Edit product data </Modal.Title>
           </Modal.Header>
@@ -279,7 +279,7 @@ export const UserProducts = (props) => {
               </div>
             </Form>
           </Modal.Body>
-        </Modal>
+        </Modal> */}
 
         <Modal show={showModalAdd} onHide={handleCloseModalAdd}>
           <Modal.Header closeButton>
@@ -373,6 +373,9 @@ export const UserProducts = (props) => {
             </form>
           </Modal.Body>
         </Modal>
+        <div className="moda fade" id="exampleModal">
+          {/* <UpdateProduct product={[productData, options]} /> */}
+        </div>
       </div>
     </div>
   );
