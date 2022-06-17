@@ -37,6 +37,23 @@ body {
   min-height: 100%;
   /* background-color: #243e63; */
 }
+
+/* @media only screen (max-width: 590px) { */
+#productContainer,
+#userContainer {
+  width: 800px;
+  max-width: 95%;
+}
+
+/* } */
+
+.userImg {
+  max-width: 10rem;
+}
+
+/* #userSidepanel {
+  background-color: #111111;
+} */
 /* 
 palette color:
 
@@ -44,3 +61,10 @@ palette color:
 #243e63;
 #F7FAFC;
 */
+
+.swall-overlay {
+  z-index: 10005;
+}
+.swal-modal {
+   z-index: 10005;
+}

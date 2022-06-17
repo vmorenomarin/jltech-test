@@ -32,15 +32,15 @@ export const Products = () => {
   }, [getProducts]);
 
   return (
-    <div className="container mt-3">
+    <div className="container mt-3" id="productContainer">
       <h2>Offers for you</h2>
       {loading ? (
         <Loading />
       ) : (
-        <div className="row row-cols-2 justify-content-around">
+        <div className="row row-cols-2 justify-content-evenly">
           {products.map((product) => (
             <div
-              className="col-lg-3 col-xl-2 col-md-4 col-sm-5 m-2 p-0 text-decoration-none text-reset"
+              className="col-md-3 col-sm-4 m-2 p-0 text-decoration-none text-reset"
               key={product._id}
             >
               <div className="card card-product">
@@ -51,7 +51,7 @@ export const Products = () => {
                 />
                 <hr />
                 <div className="card-body">
-                  <h5 className="card-title">{product.name}</h5>
+                  <h5 className="card-title fs-6">{product.name}</h5>
                   <div className="card-text">
                     <i className="fa-solid fa-dollar"></i> {product.price}
                   </div>

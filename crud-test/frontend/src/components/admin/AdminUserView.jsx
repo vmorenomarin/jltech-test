@@ -3,7 +3,7 @@ import React, { useCallback, useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import { AdminSidebar } from "./AdminSidebar";
 import { useUser } from "../../context/UserContext";
-import { Link, useParams } from "react-router-dom";
+import { NavLink, useParams } from "react-router-dom";
 import { Modal, Button, Form } from "react-bootstrap";
 
 export const AdminUserView = () => {
@@ -33,6 +33,7 @@ export const AdminUserView = () => {
   }, []);
 
   const [show, setShow] = useState(false);
+  const [psw, setPsw] = useState(false);
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
 
@@ -50,8 +51,7 @@ export const AdminUserView = () => {
         });
         e.target.value = " ";
       } else {
-        console.log("I'm here");
-        setUserdb({ ...userdb, nameImg: e.target.value });
+        setUserdb({ ...userdb, nameImg: img.name });
       }
     }
   };
@@ -64,7 +64,7 @@ export const AdminUserView = () => {
       Swal.fire({
         icon: "success",
         title: "Success updated info",
-        text: "User informationd was updated.",
+        text: "User information was updated.",
       });
     } catch (error) {
       if (!error.response.data.ok) {
@@ -77,19 +77,22 @@ export const AdminUserView = () => {
   useEffect(() => {
     getUser();
   }, [getUser]);
+
   return (
     <div className="container-fluid bg-dark text-white d-flex flex-nowrap min-vh-100 ">
-      <AdminSidebar />
+      <AdminSidebar img={user.img} />
       <div className="d-flex flex-column col-10 col-sm-10">
         <div className="border border-danger rounded p-3">
-          <h4>User detail</h4>
+          <div className="row">
+            <h4>User detail</h4>
+          </div>
           <div className="card bg-dark ">
             <div className="row">
               <div className="col-sm-5">
                 <img
                   src={userdb.img}
                   className="card-img-top m-w-25"
-                  alt="..."
+                  alt={userdb.name}
                 />
               </div>
               <div className="col-sm-7">
@@ -173,14 +176,14 @@ export const AdminUserView = () => {
                   }
                 />
               </Form.Group>
-
-              <Form.Group className="mb-3" controlId="formPassword">
-                <Form.Label>Password</Form.Label>
+              <Form.Group className="mb-3" controlId="formPhone">
+                <Form.Label>Phone</Form.Label>
                 <Form.Control
-                  type="password"
-                  placeholder="Password"
+                  type="numeric"
+                  placeholder="Phone number"
+                  value={userdb.phone}
                   onChange={(e) =>
-                    setUserdb({ ...userdb, password: e.target.value })
+                    setUserdb({ ...userdb, phone: e.target.value })
                   }
                 />
               </Form.Group>
@@ -190,7 +193,10 @@ export const AdminUserView = () => {
                 <Form.Control
                   type="file"
                   // value={userdb.nameImg}
-                  onChange={(e) => imgFormatValidation(e)}
+                  // onChange={(e) => imgFormatValidation(e)}
+                  onChange={(e) =>
+                    setUserdb({ ...userdb, nameImg: e.target.files[0].name })
+                  }
                 />
               </Form.Group>
 

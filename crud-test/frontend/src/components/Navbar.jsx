@@ -43,18 +43,45 @@ export const Navbar = () => {
             ) : (
               <ul className="navbar-nav ms-auto text-end">
                 <li className="nav-item me-3">
-                  <NavLink className="nav-link" to="/">
+                  <NavLink className="nav-link" to={"/user/"+user.id}>
                     <i className="fa-solid fa-user"></i> {user.name}
                   </NavLink>
                 </li>
-                <li className="nav-item me-3">
-                  <NavLink
-                    className="nav-link"
-                    to={user.role === "Admin" ? "/admin" : "/"}
-                  >
-                    <i className="fa-solid fa-tools"></i> Actions
-                  </NavLink>
-                </li>
+                {user.role === "Admin" ? (
+                  <li className="nav-item me-3">
+                    <NavLink className="nav-link" to={"/admin"}>
+                      <i className="fa-solid fa-tools"></i> Admin Panel
+                    </NavLink>
+                  </li>
+                ) : (
+                  <li className="nav-item me-3 dropdown">
+                    <NavLink
+                      to={"/"}
+                      className="nav-link dropdown-toggle"
+                      data-bs-toggle="dropdown"
+                      role="button"
+                      id="actionsDrop"
+                    >
+                      <i className="fa-solid fa-tools"></i> Actions
+                    </NavLink>
+                    <ul className="dropdown-menu" aria-labelledby="actionsDrop">
+                      <li>
+                        <a
+                          href="/user/products/"
+                          className="dropdown-item"
+                          toggle="false"
+                        >
+                          <i className="fa-solid fa-pen"></i> Edit Products
+                        </a>
+                      </li>
+                      <li>
+                        <a href="/user/" className="dropdown-item">
+                          <i className="fa-solid fa-plus"></i> Add Products
+                        </a>
+                      </li>
+                    </ul>
+                  </li>
+                )}
                 <li className="nav-item me-3">
                   <NavLink className="nav-link" to={"/"} onClick={() => exit()}>
                     <i className="fa-solid fa-close"></i> Exit

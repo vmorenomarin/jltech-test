@@ -39,11 +39,11 @@ const productSchema = new Schema(
     },
     img: {
       type: String,
-      // required: true,
+      required: true,
     },
     nameImg: {
       type: String,
-      // required: true,
+      required: true,
     },
   },
   { timestamps: true }

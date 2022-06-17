@@ -1,3 +1,4 @@
+require("dotenv").config();
 const customerCtrl = {};
 const customerModel = require("../models/customer.model");
 const { generalMessage } = require("../helpers/messages.helper");
@@ -5,8 +6,8 @@ const jsw = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
 const auth = require("../helpers/auth.helper");
 const { deleteImg } = require("../helpers/deleteImageCtrl.helper");
-require("dotenv").config(); // Next line will be delete. This is for test purposes.
 
+// Next line will be delete. This is for test purposes.
 const secret = process.env.SECRET;
 
 customerCtrl.listCustomers = async (req, res) => {
@@ -43,7 +44,7 @@ customerCtrl.listCustomerById = async (req, res) => {
 
 customerCtrl.addCustomer = async (req, res) => {
   try {
-    const { name, lastname, phone, password, email, document } = req.body;
+    const { name, lastname, document, phone, password, email} = req.body;
     /** Customer existence validation */
     const customer = await customerModel.findOne({ email });
     if (customer) {
@@ -58,8 +59,8 @@ customerCtrl.addCustomer = async (req, res) => {
       document,
       password: auth.encryptPassword(password),
     });
-    const { filename } = req.file;
-    newCustomer.setImgUrl(filename);
+    // const { filename } = req.file;
+    // newCustomer.setImgUrl(filename);
     await newCustomer.save();
     /** Returns user token. */
     const token = jsw.sign({ _id: newCustomer._id }, secret, {

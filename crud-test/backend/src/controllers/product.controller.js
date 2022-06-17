@@ -35,6 +35,8 @@ productCtrl.addProduct = async (req, res) => {
   /** Adds a new product to database. */
   try {
     const { name, code, price, user, stock, category } = req.body;
+    /**  const img = ""; */
+    /** const nameImg = "";*/
     const product = await productModel.findOne({ code });
     if (product) {
       return generalMessage(res, 409, "", false, "Product already exists.");
@@ -47,8 +49,10 @@ productCtrl.addProduct = async (req, res) => {
       stock,
       category,
     });
-    const { filename } = req.file;
-    newProduct.setImgUrl(filename);
+    if (req.file) {
+      const { filename } = req.file;
+      newProduct.setImgUrl(filename);
+    }
     await newProduct.save();
     generalMessage(
       res,
@@ -59,6 +63,7 @@ productCtrl.addProduct = async (req, res) => {
     );
   } catch (error) {
     generalMessage(res, 500, "", false, error.message);
+    console.log(error.message);
   }
 };
 
@@ -96,7 +101,20 @@ productCtrl.updateProduct = async (req, res) => {
       user,
     };
     await product.updateOne(updatedProduct);
-    generalMessage(res, 200, updatedProduct.name, true, "Product updated");
+    generalMessage(res, 200, updatedProduct.name, true, "Product updated.");
+  } catch (error) {
+    generalMessage(res, 500, "", false, error.message);
+  }
+};
+
+productCtrl.productsByUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const products = await productModel.find({ user: id });
+    if (!products) {
+      return generalMessage(res, 404, "", false, "User has not products.");
+    }
+    generalMessage(res, 200, products, true, "Products found.");
   } catch (error) {
     generalMessage(res, 500, "", false, error.message);
   }
@@ -107,13 +125,13 @@ productCtrl.deleteProduct = async (req, res) => {
     const { id } = req.params;
     const product = await productModel.findOne({ _id: id });
     if (!product) {
-      return generalMessage(res, 404, "", false, "Product not found");
+      return generalMessage(res, 404, "", false, "Product not found.");
     }
     if (product.namaImg) {
       deleteImg(product.namaImg);
     }
     await productModel.deleteOne({ _id: id });
-    generalMessage(res, 200, "", false, "Product deleted");
+    generalMessage(res, 200, "", true, "Product deleted");
   } catch (error) {
     generalMessage(res, 500, "", false, error.message);
   }
