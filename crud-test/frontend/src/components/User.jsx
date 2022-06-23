@@ -3,16 +3,16 @@ import { UserProducts } from "./UserProducts";
 import { useUser } from "../context/UserContext";
 // import Swal from "sweetalert2";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { Link, useParams } from "react-router-dom";
 
 export const User = () => {
-  const [currentUser, setCurrentUser] = useState([]);
+  const [currentUser, setCurrentUser] = useState({});
   const [userProducts, setUserProducts] = useState([]);
   const { id } = useParams();
   const { user } = useUser();
   const options = { headers: { authorization: "Bearer " + user.token } };
 
-  const getUserData = async (id) => {
+  const getUserData = async () => {
     try {
       const { data } = await axios.get("/user/u/" + id, options);
       setCurrentUser(data.data);
@@ -37,7 +37,7 @@ export const User = () => {
   // getUserProducts();
 
   useEffect(() => {
-    getUserData(id);
+    getUserData();
     getUserProducts();
   }, []);
 
@@ -74,9 +74,14 @@ export const User = () => {
                   {currentUser.phone}
                 </p>
                 <div className="d-flex justify-content-evenly  flex-wrap">
-                  <button className="btn btn-warning btn-sm m-1">
-                    <i className="fa fa-pen me-2"></i>Edit my info
-                  </button>
+                  <Link
+                    to={"/user/update/" + id}
+                    className="btn btn-warning my-1"
+                    type="submit"
+                  >
+                    <i className="fa fa-save"></i> Update info
+                  </Link>
+
                   <button className="btn btn-danger btn-sm m-1">
                     <i className="fa fa-key me-2"></i>Change password
                   </button>
